@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroDay Learn - Future-Proof</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind for a modern font and dark theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#8B5CF6', // Bright Violet (Premium Accent)
+                        'secondary': '#06B6D4', // Cyan (Secondary Accent)
+                        'dark-bg': '#0D1117', // Deep Dark Background (Black/Slate Mix)
+                        'card-bg': '#161B22', // Slightly lighter background for sections and cards
+                        'hot-offer': '#FBBF24', // Gold/Amber for the new premium low-cost offer
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom styles for glowing and premium effects */
+        .glow-text {
+            /* Enhancing the glow effect for a futuristic feel */
+            text-shadow: 0 0 12px rgba(139, 92, 246, 0.9), 0 0 20px rgba(139, 92, 246, 0.4);
+        }
+        .glow-hot {
+             /* Using Gold/Amber for a premium look */
+             text-shadow: 0 0 10px rgba(251, 191, 36, 0.9), 0 0 20px rgba(251, 191, 36, 0.5);
+        }
+
+        /* Enhanced card hover effect for a sense of depth */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border: 1px solid transparent;
+            border-bottom: 5px solid transparent; 
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border-color: #8B5CF6; /* Primary color border on hover */
+            background-color: #1F2937; /* Slightly lighten background for depth effect */
+        }
+        
+        /* NEW: Pulsing border animation for the Weekly Pass Ad */
+        @keyframes pulse-border {
+            0% {
+                border-color: rgba(251, 191, 36, 0.5); /* hot-offer/50 */
+                box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+            }
+            50% {
+                border-color: rgba(251, 191, 36, 1); /* hot-offer/100 */
+                box-shadow: 0 0 20px rgba(251, 191, 36, 0.8);
+            }
+            100% {
+                border-color: rgba(251, 191, 36, 0.5);
+                box-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+            }
+        }
+
+        .pulsing-border {
+            animation: pulse-border 3s infinite ease-in-out;
+        }
+
+
+        /* Modal specific styles */
+        .modal-backdrop {
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px); /* Higher blur for a richer effect */
+        }
+
+        /* New styles for the typing effect cursor */
+        .typing-cursor {
+            /* Add a blinking animation */
+            display: inline-block;
+            width: 4px;
+            height: 1.2em; 
+            background-color: #06B6D4; /* Secondary color for the cursor */
+            margin-left: 5px;
+            animation: blink 0.7s infinite;
+            vertical-align: sub; /* Align vertically with the text */
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* --- CAROUSEL STYLES (MOBILE/TABLET ONLY) --- */
+        /* By default, hide non-active cards and position them absolutely */
+        .course-card-wrapper {
+            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Disable interaction when hidden */
+            padding: 0; 
+        }
+
+        /* Only the active card is visible and takes up space on mobile */
+        .course-card-wrapper.active {
+            opacity: 1;
+            z-index: 10;
+            pointer-events: auto; /* Enable interaction when active */
+            position: static; 
+        }
+
+        .carousel-container {
+            position: relative;
+            /* HOTFIX: Min-height increased to ensure Data Analysis card fits without jamming */
+            min-height: 800px; 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* Hide controls/indicators on desktop */
+        .desktop-carousel-controls {
+            display: none;
+        }
+
+        /* --- DESKTOP GRID STYLES (lg: breakpoint) --- */
+        @media (min-width: 1024px) {
+            /* Deactivate carousel logic and switch to 2-column grid on desktop (lg:) */
+            .carousel-container {
+                min-height: auto;
+                display: grid;
+                /* FIX: Switched to 2 columns for better content density */
+                grid-template-columns: repeat(2, minmax(0, 1fr)); 
+                gap: 2.5rem; /* gap-10 */
+            }
+            
+            /* Make all cards static and visible on desktop */
+            .course-card-wrapper {
+                opacity: 1;
+                position: static;
+                width: auto;
+                height: auto;
+                padding: 0;
+                /* Ensure all cards take up 1 grid column */
+                grid-column: span 1 / span 1; 
+            }
+
+            /* Hide controls/indicators on desktop */
+            .desktop-carousel-controls {
+                display: block;
+            }
+            .mobile-carousel-controls {
+                display: none;
+            }
+            
+            /* Overwrite active class since all are active in grid view */
+            .course-card-wrapper.active {
+                position: static;
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+        
+        /* Mobile Countdown Text Size Reduction */
+        @media (max-width: 640px) {
+            .countdown-segment-mobile-fix {
+                padding: 0.5rem; /* p-2 */
+                min-width: 45px; /* Adjust width */
+            }
+            .countdown-value-mobile-fix {
+                font-size: 1.5rem; /* text-2xl */
+            }
+            .countdown-label-mobile-fix {
+                font-size: 0.65rem; /* even smaller text */
+            }
+        }
+        
+        /* Scroll-to-top button style */
+        #scroll-to-top {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        .scroll-top-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        .scroll-top-visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+
+    </style>
+</head>
+<body class="bg-dark-bg text-gray-100 font-sans">
+
+    <!-- Header & Navigation -->
+    <!-- Ultra Premium Header & Navigation -->
+<header class="fixed top-0 w-full z-50 bg-black/70 backdrop-blur-xl border-b border-gray-900 transition-all duration-500">
+    <div class="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
+
+        <!-- Logo -->
+        <a href="#" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
+            ZERO<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">DAY
+            </span>
+            <span class="font-light text-gray-400 ml-2">
+            Learn
+            </span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-12 text-gray-300 text-sm font-medium tracking-wide">
+
+            <a href="#courses" class="relative group transition duration-300">
+                Programs
+                <span class="absolute left-0 -bottom-2 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+            <a href="#weekend-pass" class="relative group transition duration-300">
+                Pro Series
+                <span class="absolute left-0 -bottom-2 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+            <a href="#project-rescue" class="relative group transition duration-300">
+                Intervention
+                <span class="absolute left-0 -bottom-2 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+            <a href="#features" class="relative group transition duration-300">
+                Advantage
+                <span class="absolute left-0 -bottom-2 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+            <a href="#testimonials" class="relative group transition duration-300">
+                Outcomes
+                <span class="absolute left-0 -bottom-2 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+
+            <!-- Apply Button -->
+            <a href="#enroll"
+               class="px-6 py-2 border border-gray-700 rounded-xl text-white text-sm font-semibold hover:border-primary hover:text-primary transition duration-300">
+                Apply
+            </a>
+
+        </nav>
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-gray-300 hover:text-white transition duration-300" onclick="toggleMobileMenu()">
+            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
+
+    </div>
+</header>
+
+    <!-- Hero Section -->
+    <main class="pt-19 pb-19">
+        <section class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-8 text-center pt-24 pb-20 min-h-[85vh] flex items-center relative overflow-hidden">
+
+    <!-- Soft Premium Gradient Glow -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-40 pointer-events-none"></div>
+
+    <div class="relative space-y-10">
+
+        <!-- Small Elite Tag -->
+        <p class="text-sm uppercase tracking-[0.3em] text-gray-400 font-semibold">
+            ZeroDay Learn • Founding Cohort 2025
+        </p>
+
+        <!-- Main Heading -->
+        <h1 class="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight leading-tight text-white">
+            Build What  
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                The Future Demands.
+            </span>
+        </h1>
+
+        <!-- Sub Text -->
+        <p class="text-xl sm:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            Elite programs in Cyber Security and Artificial Intelligence,  
+            designed for ambitious minds ready to dominate the tech industry.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="pt-10 flex flex-col sm:flex-row justify-center gap-6">
+
+            <button onclick="openModal()"
+    class="group relative inline-flex items-center justify-center px-12 py-5 overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-secondary text-white font-semibold text-lg shadow-[0_20px_60px_rgba(139,92,246,0.4)] transition-all duration-500 hover:scale-[1.02]">
+
+    <span class="relative z-10 flex items-center gap-3">
+        Begin Your Application
+        <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+        </svg>
+    </span>
+
+</button>
+
+            <a href="#courses"
+                class="px-10 py-4 border border-gray-700 text-gray-300 text-lg font-semibold rounded-2xl hover:border-secondary hover:text-secondary transition duration-300">
+                Explore Programs
+            </a>
+
+        </div>
+
+    </div>
+</section>
+        
+        <!-- ZeroDay Weekly Pro Pass (NEW SECTION - ENHANCED) -->
+        <section id="weekend-pass" class="pt-24 pb-20 bg-black relative overflow-hidden">
+
+    <!-- Soft Premium Glow -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-40 pointer-events-none"></div>
+
+    <div class="relative max-w-6xl mx-auto px-6 text-center">
+
+        <!-- Elite Label -->
+        <p class="text-sm uppercase tracking-[0.3em] text-gray-500 font-semibold">
+            ZeroDay Learn • Pro Series
+        </p>
+
+        <!-- Main Heading -->
+        <h2 class="mt-6 text-4xl sm:text-5xl font-extrabold text-white">
+            The <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+            ZeroDay Pro Series
+            </span>
+        </h2>
+
+        <!-- Description -->
+        <p class="mt-6 text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            An advanced, closed-room lab experience focused on real-world 
+            red teaming operations and AI security exploitation techniques.
+        </p>
+
+        <!-- Feature Blocks -->
+        <div class="mt-16 grid sm:grid-cols-3 gap-8 max-w-5xl mx-auto text-left">
+
+            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
+                <h4 class="text-white font-bold text-lg mb-2">Enterprise Red Team Labs</h4>
+                <p class="text-gray-400">Simulated attack scenarios used in real corporate environments.</p>
+            </div>
+
+            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
+                <h4 class="text-white font-bold text-lg mb-2">AI Security Exploitation</h4>
+                <p class="text-gray-400">Prompt injection, LLM manipulation & model abuse techniques.</p>
+            </div>
+
+            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
+                <h4 class="text-white font-bold text-lg mb-2">Selective Cohort</h4>
+                <p class="text-gray-400">Limited participants per session. Serious learners only.</p>
+            </div>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-12 flex flex-col items-center">
+
+    <p class="text-gray-500 text-base mb-4 tracking-wide">
+        Access granted upon review.
+    </p>
+
+    <button onclick="openModal('ZeroDay Pro Series')"
+        class="px-10 py-4 bg-secondary text-dark-bg text-lg font-semibold rounded-2xl 
+               shadow-[0_12px_30px_rgba(6,182,212,0.35)] 
+               hover:bg-cyan-400 hover:scale-[1.02] 
+               transition-all duration-300">
+        Enquire About Access
+    </button>
+
+</div>
+
+    </div>
+</section>
+
+        <!-- Course Offerings Section -->
+        <section id="courses" class="pt-24 pb-20 bg-gradient-to-b from-dark-bg to-black relative overflow-hidden">
+
+    <!-- Subtle Premium Glow -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white">
+                The <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                ZeroDay Elite Programs
+                </span>
+            </h2>
+            <p class="mt-6 text-xl text-gray-400 max-w-3xl mx-auto">
+                Built for ambitious minds. Designed for industry dominance.
+            </p>
+        </div>
+
+        <!-- Premium Cards -->
+        <div class="mt-6 grid sm:grid-cols-2 gap-8 max-w-5xl mx-auto text-left">
+
+            <!-- Cyber Security -->
+            <div class="group relative bg-gradient-to-br from-gray-900 to-black p-10 rounded-3xl border border-gray-800 shadow-[0_20px_80px_rgba(0,0,0,0.6)] hover:shadow-[0_30px_120px_rgba(139,92,246,0.4)] transition duration-500">
+
+                <div class="mb-6">
+                    <h3 class="text-3xl font-bold text-white">
+                        Cyber Security
+                    </h3>
+                    <p class="mt-3 text-gray-400">
+                        Advanced Networking and Ethical Hacking.
+                    </p>
+                </div>
+
+                <div class="space-y-4 text-gray-300 text-lg">
+                    <p>• Real-world VAPT & Active Directory attacks</p>
+                    <p>• Cloud & Kubernetes Security</p>
+                    <p>• Red Team simulation labs</p>
+                    <p>• Industry-grade reporting & methodology</p>
+                </div>
+
+                <div class="mt-10 flex justify-between items-center">
+                    <div>
+                        <span class="text-4xl font-extrabold text-white">₹4,999</span>
+                        <span class="ml-3 text-gray-500 line-through text-xl">₹11,999</span>
+                    </div>
+                    <button onclick="openModal('Cyber Security')"
+                        class="px-6 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-violet-700 transition duration-300">
+                        Apply Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- AI & Machine Learning -->
+            <div class="group relative bg-gradient-to-br from-gray-900 to-black p-10 rounded-3xl border border-gray-800 shadow-[0_20px_80px_rgba(0,0,0,0.6)] hover:shadow-[0_30px_120px_rgba(6,182,212,0.4)] transition duration-500">
+
+                <div class="mb-6">
+                    <h3 class="text-3xl font-bold text-white">
+                        Artificial Intelligence
+                    </h3>
+                    <p class="mt-3 text-gray-400">
+                        Machine Learning, LLM Engineering & AI Security.
+                    </p>
+                </div>
+
+                <div class="space-y-4 text-gray-300 text-lg">
+                    <p>• Python & Advanced ML Algorithms</p>
+                    <p>• Deep Learning & Neural Networks</p>
+                    <p>• LLMs & Prompt Engineering</p>
+                    <p>• AI Red Team & Model Exploitation</p>
+                </div>
+
+                <div class="mt-10 flex justify-between items-center">
+                    <div>
+                        <span class="text-4xl font-extrabold text-white">₹4,999</span>
+                        <span class="ml-3 text-gray-500 line-through text-xl">₹11,999</span>
+                    </div>
+                    <button onclick="openModal('AI & Machine Learning')"
+                        class="px-6 py-3 bg-secondary text-dark-bg font-semibold rounded-xl hover:bg-cyan-400 transition duration-300">
+                        Apply Now
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+        <!-- NEW SECTION: Project Rescue/Consulting (MOVED HERE) -->
+        <section id="project-rescue" class="py-12 bg-black relative overflow-hidden border-t border-gray-900">
+
+    <!-- Subtle Premium Glow -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-30 pointer-events-none"></div>
+
+    <div class="relative max-w-6xl mx-auto px-6 text-center">
+
+        <!-- Label -->
+        <p class="text-sm uppercase tracking-[0.3em] text-gray-500 font-semibold">
+            Technical Intervention
+        </p>
+
+        <!-- Heading -->
+        <h2 class="mt-6 text-5xl sm:text-6xl font-extrabold text-white">
+            ZeroDay <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+            Project Intervention
+            </span>
+        </h2>
+
+        <!-- Description -->
+        <p class="mt-8 text-xl text-gray-400 leading-relaxed max-w-3xl mx-auto">
+            Stuck with a final-year project?  
+            Facing deployment failures?  
+            Need architectural correction in Cyber Security or AI systems?
+        </p>
+
+        <p class="mt-6 text-lg text-gray-500 max-w-3xl mx-auto">
+            Our team reviews, restructures, and strengthens technical execution 
+            with industry-level precision.
+        </p>
+
+        <!-- Focus Areas -->
+        <div class="mt-12 grid md:grid-cols-3 gap-8 text-left max-w-5xl mx-auto">
+
+            <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800">
+                <h4 class="text-white font-bold text-lg mb-3">Security Architecture Review</h4>
+                <p class="text-gray-400">
+                    Code analysis, vulnerability detection, and structural hardening.
+                </p>
+            </div>
+
+            <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800">
+                <h4 class="text-white font-bold text-lg mb-3">AI Model Debugging</h4>
+                <p class="text-gray-400">
+                    Performance tuning, dataset refinement, and deployment stabilization.
+                </p>
+            </div>
+
+            <div class="bg-gray-900 p-8 rounded-2xl border border-gray-800">
+                <h4 class="text-white font-bold text-lg mb-3">Strategic Guidance</h4>
+                <p class="text-gray-400">
+                    Technical direction, documentation improvement, and demo preparation.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-12">
+            <button onclick="openModal('Project Intervention')"
+                class="px-12 py-4 bg-secondary text-dark-bg text-lg font-semibold rounded-2xl shadow-[0_15px_40px_rgba(6,182,212,0.35)] hover:bg-cyan-400 transition duration-300">
+                Request Technical Review
+            </button>
+        </div>
+
+    </div>
+
+</section>
+        <!-- END NEW SECTION -->
+
+        <!-- Key Features/Why Choose Us Section -->
+        <section id="features" class="py-12 bg-black relative overflow-hidden">
+
+    <!-- Subtle Premium Glow -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-30 pointer-events-none"></div>
+
+    <div class="relative max-w-6xl mx-auto px-6">
+
+        <!-- Section Header -->
+        <div class="text-center mb-24">
+            <p class="text-sm uppercase tracking-[0.3em] text-gray-500 font-semibold">
+                The ZeroDay Advantage
+            </p>
+            <h2 class="mt-6 text-5xl sm:text-6xl font-extrabold text-white">
+                Built Different.
+            </h2>
+        </div>
+
+        <!-- Premium Feature Blocks -->
+        <div class="grid md:grid-cols-2 gap-16">
+
+            <!-- Block 1 -->
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-4">
+                    Enterprise-Grade Training
+                </h3>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    Our curriculum mirrors real industry attack scenarios and AI system architectures. 
+                    You don’t learn tools — you master environments.
+                </p>
+            </div>
+
+            <!-- Block 2 -->
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-4">
+                    Discipline & Execution
+                </h3>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    We focus on mindset, structured thinking, and execution precision — 
+                    the traits that separate average learners from elite professionals.
+                </p>
+            </div>
+
+            <!-- Block 3 -->
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-4">
+                    Real Mentorship
+                </h3>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    Direct access to experienced practitioners working in real-world security 
+                    and AI environments — not just theoretical instructors.
+                </p>
+            </div>
+
+            <!-- Block 4 -->
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-4">
+                    Career Transformation
+                </h3>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    Portfolio refinement, technical interview simulations, and 
+                    strategic positioning for global tech opportunities.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+        <!-- Testimonials/Success Stories Section -->
+        <section id="testimonials" class="py-32 bg-black relative overflow-hidden">
+
+    <!-- Soft Background Glow -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-30 pointer-events-none"></div>
+
+    <div class="relative max-w-6xl mx-auto px-6">
+
+        <!-- Section Header -->
+        <div class="text-center mb-24">
+            <p class="text-sm uppercase tracking-[0.3em] text-gray-500 font-semibold">
+                Success Stories
+            </p>
+            <h2 class="mt-6 text-5xl sm:text-6xl font-extrabold text-white">
+                Built for the <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                Relentless.
+                </span>
+            </h2>
+        </div>
+
+        <!-- Testimonial 1 -->
+        <div class="mb-24">
+            <p class="text-3xl sm:text-4xl font-semibold text-white leading-relaxed max-w-4xl">
+                “ZeroDay Learn completely changed my trajectory. 
+                I went from understanding basic security concepts 
+                to executing full-scale penetration testing in real environments.”
+            </p>
+
+            <div class="mt-8 text-gray-400">
+                <p class="font-bold text-white text-lg">Arjun K.</p>
+                <p>Security Analyst • Product-Based Company</p>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="border-t border-gray-800 mb-24"></div>
+
+        <!-- Testimonial 2 -->
+        <div class="mb-24">
+            <p class="text-3xl sm:text-4xl font-semibold text-white leading-relaxed max-w-4xl">
+                “The AI program wasn’t just theory. 
+                We built real models, tested vulnerabilities, 
+                and understood how enterprise systems think.”
+            </p>
+
+            <div class="mt-8 text-gray-400">
+                <p class="font-bold text-white text-lg">Divya R.</p>
+                <p>Machine Learning Engineer • FinTech Startup</p>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="border-t border-gray-800 mb-24"></div>
+
+        <!-- Testimonial 3 -->
+        <div>
+            <p class="text-3xl sm:text-4xl font-semibold text-white leading-relaxed max-w-4xl">
+                “ZeroDay isn’t a course. 
+                It’s a transformation. 
+                The discipline, mindset, and exposure gave me the confidence 
+                to compete globally.”
+            </p>
+
+            <div class="mt-8 text-gray-400">
+                <p class="font-bold text-white text-lg">Naveen S.</p>
+                <p>Red Team Associate • MNC</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+        
+        <!-- Industry Authority / Trust Badges Section (NEW) -->
+        <section class="py-20 bg-black border-y border-gray-900">
+
+    <div class="max-w-6xl mx-auto px-6 text-center">
+
+        <p class="text-xs uppercase tracking-[0.4em] text-gray-500 mb-12">
+            Recognized & Aligned With
+        </p>
+
+        <div class="flex flex-wrap justify-center items-center gap-16 text-gray-400 text-xl font-semibold">
+
+            <span class="opacity-60 hover:opacity-100 transition duration-300">
+                ISO 9001
+            </span>
+
+            <span class="opacity-60 hover:opacity-100 transition duration-300">
+                Skill India
+            </span>
+
+            <span class="opacity-60 hover:opacity-100 transition duration-300">
+                NASSCOM
+            </span>
+
+            <span class="opacity-60 hover:opacity-100 transition duration-300">
+                Certified
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+        <!-- Flexible Payment Section (NEW) -->
+        <section class="py-32 bg-black relative overflow-hidden border-y border-gray-900">
+
+    <!-- Ambient Glow -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-20 pointer-events-none"></div>
+
+    <div class="relative max-w-6xl mx-auto px-6 text-center">
+
+        <!-- Header -->
+        <p class="text-sm uppercase tracking-[0.3em] text-gray-500 font-semibold">
+            Tuition Structure
+        </p>
+
+        <h2 class="mt-6 text-5xl sm:text-6xl font-extrabold text-white">
+            Structured Payment Plan
+        </h2>
+
+        <p class="mt-8 text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            A disciplined two-phase tuition model designed to align commitment with performance.
+        </p>
+
+        <!-- Timeline Flow -->
+        <div class="mt-24 flex flex-col md:flex-row items-center justify-center gap-12">
+
+            <!-- Phase 1 -->
+            <div class="relative bg-gray-900/40 backdrop-blur-xl border border-gray-800 rounded-3xl p-10 w-full md:w-1/3 text-left shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+
+                <div class="text-sm text-gray-500 uppercase tracking-widest mb-4">
+                    Phase One
+                </div>
+
+                <h3 class="text-2xl font-bold text-white mb-4">
+                    Admission Commitment
+                </h3>
+
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    Initial tuition portion is secured at the time of enrollment.
+                </p>
+
+            </div>
+
+            <!-- Animated Connector -->
+            <div class="hidden md:flex items-center">
+                <div class="h-[2px] w-20 bg-gradient-to-r from-primary to-secondary animate-pulse"></div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="relative bg-gray-900/40 backdrop-blur-xl border border-gray-800 rounded-3xl p-10 w-full md:w-1/3 text-left shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+
+                <div class="text-sm text-gray-500 uppercase tracking-widest mb-4">
+                    Phase Two
+                </div>
+
+                <h3 class="text-2xl font-bold text-white mb-4">
+                    Completion Settlement
+                </h3>
+
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    Remaining tuition is payable upon successful completion of the program.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Sub Note -->
+        <p class="mt-20 text-gray-500 text-sm">
+            Available for selected programs only.
+        </p>
+
+    </div>
+
+</section>
+        
+        <!-- FAQ Section (UPDATED FOR CONSISTENCY) -->
+        <section id="faq" class="pt-20 pb-12 bg-black relative overflow-hidden">
+
+    <!-- Subtle Glow -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-20 pointer-events-none"></div>
+
+    <div class="relative max-w-4xl mx-auto px-6">
+
+        <!-- Header -->
+        <div class="text-center mb-20">
+            <p class="text-sm uppercase tracking-[0.3em] text-gray-500 font-semibold">
+                Clarity
+            </p>
+
+            <h2 class="mt-6 text-5xl sm:text-6xl font-extrabold text-white">
+                Frequently Asked Questions
+            </h2>
+        </div>
+
+        <!-- FAQ Items -->
+        <div class="space-y-6">
+
+            <!-- Item -->
+            <div class="border border-gray-800 rounded-2xl p-6 bg-gray-900/40">
+                <button class="w-full flex justify-between items-center text-left text-lg font-medium text-white"
+                        onclick="toggleFAQ(this)">
+                    What background is required to join?
+                    <span class="text-gray-400 text-2xl">+</span>
+                </button>
+                <div class="mt-4 text-gray-400 hidden">
+                    No prior experience is mandatory. A disciplined mindset and willingness to learn are sufficient.
+                </div>
+            </div>
+
+            <!-- Item -->
+            <div class="border border-gray-800 rounded-2xl p-6 bg-gray-900/40">
+                <button class="w-full flex justify-between items-center text-left text-lg font-medium text-white"
+                        onclick="toggleFAQ(this)">
+                    Do you provide career guidance?
+                    <span class="text-gray-400 text-2xl">+</span>
+                </button>
+                <div class="mt-4 text-gray-400 hidden">
+                    Yes. We provide structured interview preparation, portfolio refinement, and strategic mentorship.
+                </div>
+            </div>
+
+            <!-- Item -->
+            <div class="border border-gray-800 rounded-2xl p-6 bg-gray-900/40">
+                <button class="w-full flex justify-between items-center text-left text-lg font-medium text-white"
+                        onclick="toggleFAQ(this)">
+                    Is this suitable for working professionals?
+                    <span class="text-gray-400 text-2xl">+</span>
+                </button>
+                <div class="mt-4 text-gray-400 hidden">
+                    Absolutely. Sessions are structured to accommodate both students and working professionals.
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+        
+        <!-- CTA / Enrollment Section (Updated with Pricing and Hot Theme) -->
+        <section id="enroll" class="pt-24 pb-12 bg-black relative overflow-hidden">
+
+    <!-- Subtle Premium Glow -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-30 pointer-events-none"></div>
+
+    <div class="relative max-w-5xl mx-auto px-6 text-center">
+
+        <!-- Header -->
+        <p class="text-sm uppercase tracking-[0.3em] text-gray-500 font-semibold">
+            Admissions Open
+        </p>
+
+        <h2 class="mt-6 text-5xl sm:text-6xl font-extrabold text-white leading-tight">
+            Apply for the <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+            Founding Cohort.
+            </span>
+        </h2>
+
+        <p class="mt-8 text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            We are building a community of disciplined, high-performance learners 
+            in Cyber Security and Artificial Intelligence.  
+            Admissions are reviewed carefully.
+        </p>
+
+        <!-- Admission Points -->
+        <div class="mt-16 grid sm:grid-cols-3 gap-8 text-left max-w-4xl mx-auto">
+
+            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
+                <h4 class="text-white font-bold text-lg mb-2">Selective Intake</h4>
+                <p class="text-gray-400">Limited seats to maintain training intensity and quality.</p>
+            </div>
+
+            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
+                <h4 class="text-white font-bold text-lg mb-2">Structured Mentorship</h4>
+                <p class="text-gray-400">Direct guidance from experienced industry professionals.</p>
+            </div>
+
+            <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
+                <h4 class="text-white font-bold text-lg mb-2">Career Acceleration</h4>
+                <p class="text-gray-400">Portfolio building, mock interviews & strategic preparation.</p>
+            </div>
+
+        </div>
+
+        <!-- Tuition (Premium Positioning) -->
+        <div class="mt-20">
+
+            <p class="text-gray-500 text-lg mb-4">
+                Founding Tuition
+            </p>
+
+            <p class="text-5xl font-extrabold text-white">
+                ₹4,999
+            </p>
+
+            <p class="text-gray-500 mt-4">
+                Payment plans available upon approval.
+            </p>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="mt-12">
+            <button onclick="openModal()"
+                class="px-12 py-4 bg-primary text-white text-lg font-semibold rounded-2xl shadow-[0_15px_40px_rgba(139,92,246,0.4)] hover:bg-violet-700 transition duration-300">
+                Submit Application
+            </button>
+        </div>
+
+    </div>
+</section>
+    </main>
+
+    <!-- NEW SECTION: Newsletter Signup -->
+    <section id="newsletter" class="pt-16 pb-24 bg-black relative overflow-hidden">
+
+    <!-- Subtle Premium Glow -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-30 pointer-events-none"></div>
+
+    <div class="relative max-w-4xl mx-auto px-6 text-center">
+
+        <!-- Label -->
+        <p class="text-sm uppercase tracking-[0.3em] text-gray-500 font-semibold">
+            ZeroDay Insights
+        </p>
+
+        <!-- Heading -->
+        <h2 class="mt-6 text-5xl sm:text-6xl font-extrabold text-white">
+            Stay Ahead.
+        </h2>
+
+        <!-- Description -->
+        <p class="mt-8 text-xl text-gray-400 leading-relaxed max-w-3xl mx-auto">
+            Periodic insights on Cyber Security, Artificial Intelligence, 
+            red team methodologies, and real-world technical breakdowns.  
+            Straight to your inbox.
+        </p>
+
+        <!-- Form -->
+        <form id="newsletter-form" onsubmit="handleNewsletterSignup(event)"
+              class="mt-16 flex flex-col sm:flex-row justify-center gap-6 max-w-2xl mx-auto">
+
+            <input type="email"
+                   id="newsletter-email"
+                   required
+                   placeholder="Enter your email"
+                   class="flex-1 px-6 py-4 bg-gray-900 border border-gray-800 rounded-2xl text-white focus:outline-none focus:border-primary transition duration-300">
+
+            <button type="submit"
+                    class="px-10 py-4 bg-primary text-white font-semibold rounded-2xl hover:bg-violet-700 transition duration-300 shadow-[0_15px_40px_rgba(139,92,246,0.4)]">
+                Subscribe
+            </button>
+
+        </form>
+
+        <!-- Sub Note -->
+        <p class="mt-6 text-gray-600 text-sm">
+            No spam. Unsubscribe anytime.
+        </p>
+
+    </div>
+</section>
+
+    <!-- Campus Ambassador Recruitment Banner (NEW SECTION) -->
+    <section id="campus-ambassador" class="py-24 bg-black border-t border-gray-900 border-b border-gray-900 relative overflow-hidden">
+
+    <!-- Subtle Gradient Line -->
+    <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 pointer-events-none"></div>
+
+    <div class="relative max-w-6xl mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-8 text-center lg:text-left">
+
+        <!-- Left Content -->
+        <div>
+            <p class="text-sm uppercase tracking-[0.3em] text-gray-500 font-semibold">
+                Campus Leadership Program
+            </p>
+
+            <h3 class="mt-3 text-3xl sm:text-4xl font-bold text-white">
+                Represent <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                ZeroDay Learn
+                </span> in Your Institution.
+            </h3>
+
+            <p class="mt-4 text-gray-400 text-lg">
+                Lead technical communities. Organize security discussions. Build influence.
+            </p>
+        </div>
+
+        <!-- Right CTA -->
+        <div>
+            <button onclick="openModal('Campus Leadership Program')"
+                class="px-10 py-4 bg-primary text-white font-semibold rounded-2xl shadow-[0_15px_40px_rgba(139,92,246,0.35)] hover:bg-violet-700 transition duration-300">
+                Apply as Campus Leader
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-gray-900 py-20">
+
+    <div class="max-w-6xl mx-auto px-6">
+
+        <!-- Top Section -->
+        <div class="grid md:grid-cols-2 gap-16">
+
+            <!-- Brand Block -->
+            <div>
+                <h3 class="text-3xl font-extrabold text-white mb-6">
+                    ZeroDay Learn
+                </h3>
+
+                <p class="text-gray-400 text-lg leading-relaxed max-w-md">
+                    An elite technology institution focused on Cyber Security 
+                    and Artificial Intelligence.  
+                    Built for ambitious minds ready to compete globally.
+                </p>
+            </div>
+
+            <!-- Contact + Social -->
+            <div class="md:text-right">
+
+                <h4 class="text-white font-bold text-lg mb-6">
+                    Connect
+                </h4>
+
+                <div class="space-y-4 text-gray-400">
+
+                    <p>
+                        <a href="mailto:support@zerodaylearn.com" 
+                           class="hover:text-white transition duration-300">
+                            support@zerodaylearn.com
+                        </a>
+                    </p>
+
+                    <p>
+                        <a href="tel:+919876543210" 
+                           class="hover:text-white transition duration-300">
+                            +91 98765 43210
+                        </a>
+                    </p>
+
+                </div>
+
+                <!-- Social Links -->
+                <div class="flex md:justify-end gap-6 mt-8 text-gray-500 text-lg">
+
+                    <a href="#" class="hover:text-primary transition duration-300">
+                        Instagram
+                    </a>
+
+                    <a href="#" class="hover:text-secondary transition duration-300">
+                        LinkedIn
+                    </a>
+
+                    <a href="#" class="hover:text-white transition duration-300">
+                        Twitter
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Bottom Divider -->
+        <div class="border-t border-gray-900 mt-16 pt-8 text-center text-gray-500 text-sm">
+
+            © 2025 ZeroDay Learn.  
+            Building disciplined technology leaders.
+
+        </div>
+
+    </div>
+
+</footer>
+
+    <!-- Scroll-to-Top Button (NEW) -->
+    <button id="scroll-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+            class="fixed bottom-20 right-4 z-40 p-4 bg-primary text-white rounded-full shadow-2xl hover:bg-violet-700 scroll-top-hidden">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
+
+    <!-- Ultra Premium Admission Modal -->
+<div id="enrollment-modal" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/70 backdrop-blur-xl transition-all duration-500">
+
+    <div class="relative bg-gray-900/80 backdrop-blur-2xl border border-gray-800 rounded-3xl w-full max-w-xl p-12 shadow-[0_40px_100px_rgba(0,0,0,0.7)] transition-all duration-500">
+
+        <!-- Close -->
+        <button onclick="closeModal()" 
+            class="absolute top-6 right-6 text-gray-500 hover:text-white transition duration-300 text-2xl">
+            &times;
+        </button>
+
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <p class="text-xs uppercase tracking-[0.4em] text-gray-500 mb-4">
+                ZeroDay Learn
+            </p>
+            <h3 class="text-4xl font-extrabold text-white">
+                Begin Your Application
+            </h3>
+            <p class="text-gray-400 mt-4 text-lg">
+                Submit your details to proceed with the admission process.
+            </p>
+        </div>
+
+        <!-- Form -->
+        <form id="enrollment-form" onsubmit="handleEnrollment(event)" class="space-y-6">
+
+            <!-- Name -->
+            <input type="text" name="name" required
+                placeholder="Full Name"
+                class="w-full px-6 py-4 bg-black border border-gray-800 rounded-2xl text-white focus:outline-none focus:border-primary transition duration-300">
+
+            <!-- Phone with +91 -->
+            <div class="flex">
+                <span class="px-4 py-4 bg-gray-800 border border-gray-800 rounded-l-2xl text-gray-400">
+                    +91
+                </span>
+                <input type="tel" name="phone" required pattern="[0-9]{10}"
+                    placeholder="9876543210"
+                    class="w-full px-6 py-4 bg-black border border-gray-800 rounded-r-2xl text-white focus:outline-none focus:border-primary transition duration-300">
+            </div>
+
+            <!-- Email -->
+            <input type="email" name="email" required
+                placeholder="Email Address"
+                class="w-full px-6 py-4 bg-black border border-gray-800 rounded-2xl text-white focus:outline-none focus:border-primary transition duration-300">
+
+            <!-- Course Select -->
+            <select name="course" required
+                class="w-full px-6 py-4 bg-black border border-gray-800 rounded-2xl text-white focus:outline-none focus:border-primary transition duration-300">
+
+                <option value="" disabled selected>Select Program</option>
+                <option value="Cyber Security">Cyber Security</option>
+                <option value="AI & Machine Learning">AI & Machine Learning</option>
+                <option value="ZeroDay Pro Series">ZeroDay Pro Series</option>
+                <option value="Project Intervention">Project Intervention</option>
+
+            </select>
+
+            <!-- Submit -->
+            <button type="submit"
+                class="w-full py-4 mt-6 bg-primary text-white font-semibold rounded-2xl hover:bg-violet-700 transition duration-300 shadow-[0_20px_60px_rgba(139,92,246,0.4)]">
+                Submit Application
+            </button>
+
+        </form>
+
+        <!-- Success Message -->
+        <div id="enrollment-success" class="hidden text-center mt-6">
+            <svg class="h-16 w-16 text-primary mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+
+            <p class="text-2xl font-bold text-white">
+                Application Received
+            </p>
+
+            <p class="text-gray-400 mt-4">
+                Our team will contact you shortly via phone.
+            </p>
+        </div>
+
+    </div>
+</div>
+
+    <!-- Project Rescue Modal (Z-103) - NEW -->
+    <div id="project-rescue-modal" class="hidden fixed inset-0 z-[103] overflow-y-auto">
+        <!-- Modal Backdrop -->
+        <div class="modal-backdrop fixed inset-0 transition-opacity" onclick="closeProjectRescueModal()"></div>
+
+        <!-- Modal Content Container -->
+        <div class="flex items-center justify-center min-h-screen p-4 sm:p-8">
+            <div id="rescue-content" class="relative bg-card-bg rounded-2xl shadow-2xl w-full max-w-lg p-8 transform transition-all border-4 border-secondary/70">
+                
+                <!-- Close Button -->
+                <button onclick="closeProjectRescueModal()" class="absolute top-4 right-4 text-gray-400 hover:text-secondary transition duration-300 p-2 rounded-full hover:bg-gray-800">
+                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+
+                <!-- Modal Header -->
+                <div class="text-center mb-8">
+                    <h3 class="text-4xl font-extrabold text-secondary glow-text">Project Rescue: Get Unstuck!</h3>
+                    <p class="text-gray-300 mt-2 text-lg">Tell us about your IT project challenge. We'll connect you with a senior expert.</p>
+                    <p class="text-xs text-red-400 mt-2 font-semibold italic">Consultation Charges and T&Cs Apply.</p>
+                </div>
+
+                <!-- Rescue Form -->
+                <form id="project-rescue-form" onsubmit="handleProjectRescue(event)">
+                    <div class="space-y-6">
+                        <!-- Name Field -->
+                        <div>
+                            <label for="rescue-name" class="block text-sm font-semibold text-gray-300 mb-2">Full Name</label>
+                            <input type="text" id="rescue-name" name="name" required
+                                class="w-full px-4 py-3 bg-dark-bg border border-gray-600 rounded-lg text-gray-100 focus:ring-secondary focus:border-secondary transition duration-200 shadow-inner"
+                                placeholder="Your Name">
+                        </div>
+
+                        <!-- Phone Field -->
+                        <div>
+                            <label for="rescue-phone" class="block text-sm font-semibold text-gray-300 mb-2">Phone Number</label>
+                            <input type="tel" id="rescue-phone" name="phone" required pattern="[0-9]{10}"
+                                class="w-full px-4 py-3 bg-dark-bg border border-gray-600 rounded-lg text-gray-100 focus:ring-secondary focus:border-secondary transition duration-200 shadow-inner"
+                                placeholder="10-digit Phone Number">
+                        </div>
+
+                        <!-- Email Field -->
+                        <div>
+                            <label for="rescue-email" class="block text-sm font-semibold text-gray-300 mb-2">Email Address</label>
+                            <input type="email" id="rescue-email" name="email" required
+                                class="w-full px-4 py-3 bg-dark-bg border border-gray-600 rounded-lg text-gray-100 focus:ring-secondary focus:border-secondary transition duration-200 shadow-inner"
+                                placeholder="name@email.com">
+                        </div>
+
+                        <!-- Project Details Field (Textarea) -->
+                        <div>
+                            <label for="rescue-details" class="block text-sm font-semibold text-gray-300 mb-2">Project Details / Where Are You Stuck?</label>
+                            <textarea id="rescue-details" name="details" rows="4" required
+                                class="w-full px-4 py-3 bg-dark-bg border border-gray-600 rounded-lg text-gray-100 focus:ring-secondary focus:border-secondary transition duration-200 shadow-inner"
+                                placeholder="e.g., 'My React component won't render data from my custom API' or 'Need help debugging a complex Python ML model.'"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                                class="w-full mt-8 px-4 py-4 bg-primary text-white font-extrabold rounded-xl hover:bg-violet-700 transition duration-300 shadow-2xl transform hover:scale-[1.01] ring-2 ring-primary/50">
+                            Submit Request
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Success Message (hidden by default) -->
+                <div id="rescue-success" class="hidden text-center pt-4">
+                    <svg class="h-16 w-16 text-secondary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    <p class="text-3xl font-bold text-gray-100">Request Sent!</p>
+                    <p class="text-lg text-gray-300 mt-2">A project mentor will contact you shortly at the provided number/email to discuss your customized solution.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Course Preview Modal (Z-101) - NEW -->
+    <div id="course-preview-modal" class="hidden fixed inset-0 z-[101] overflow-y-auto">
+        <!-- Modal Backdrop -->
+        <div class="modal-backdrop fixed inset-0 transition-opacity" onclick="closePreviewModal()"></div>
+
+        <!-- Modal Content Container -->
+        <div class="flex items-start justify-center min-h-screen p-4 sm:p-8">
+            <div id="preview-content" class="relative bg-card-bg rounded-2xl shadow-2xl w-full max-w-4xl p-8 mt-12 transform transition-all border-4 border-secondary/70">
+                
+                <!-- Close Button -->
+                <button onclick="closePreviewModal()" class="absolute top-4 right-4 text-gray-400 hover:text-secondary transition duration-300 p-2 rounded-full hover:bg-gray-800">
+                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+
+                <!-- Dynamic Content Area -->
+                <div id="preview-body">
+                    <!-- Title and Description (Populated by JS) -->
+                    <div class="flex items-center space-x-4 mb-6 border-b border-gray-700/50 pb-4">
+                        <div id="preview-icon-container" class="w-10 h-10"></div>
+                        <h3 id="preview-title" class="text-4xl font-extrabold text-white"></h3>
+                    </div>
+                    
+                    <p id="preview-description" class="text-lg text-gray-300 mb-6"></p>
+
+                    <div class="grid md:grid-cols-3 gap-6 mb-8">
+                        <!-- Key Metrics -->
+                        <div id="preview-duration" class="bg-dark-bg p-4 rounded-lg border border-gray-700/50 text-center"></div>
+                        <div id="preview-projects" class="bg-dark-bg p-4 rounded-lg border border-gray-700/50 text-center"></div>
+                        <div id="preview-focus" class="bg-dark-bg p-4 rounded-lg border border-gray-700/50 text-center"></div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <!-- Curriculum Modules (Populated by JS) -->
+                        <div>
+                            <h4 class="text-2xl font-bold text-primary mb-4">Core Modules</h4>
+                            <!-- Changed from ul/li to div for custom list styling -->
+                            <div id="preview-modules" class="space-y-4">
+                                <!-- Modules will be inserted here with checkmarks -->
+                            </div>
+                        </div>
+
+                        <!-- CTA Sidebar -->
+                        <div class="bg-slate-800 p-6 rounded-xl border border-primary/50 flex flex-col justify-between">
+                            <div>
+                                <h4 class="text-3xl font-extrabold text-secondary mb-3">Ready to Start?</h4>
+                                <p class="text-gray-300 mb-4">Secure the massive discount before the timer hits zero!</p>
+                                
+                                <p class="text-5xl font-extrabold mb-4">
+                                    <span class="text-gray-500 line-through text-2xl mr-3">₹11,999</span>
+                                    <span class="text-primary">₹4,999</span>
+                                </p>
+                            </div>
+
+                            <div class="space-y-4">
+                                <button onclick="closePreviewModal(); openModal(document.getElementById('preview-title').textContent.trim())"
+                                    class="w-full px-6 py-3 bg-primary text-white font-extrabold rounded-lg hover:bg-violet-700 transition duration-300 shadow-xl">
+                                    Enroll Now & Save 90%
+                                </button>
+                                <!-- Brochure Download Button (Now Gated) -->
+                                <button onclick="openBrochureGateModal(document.getElementById('preview-title').textContent.trim())"
+                                    class="w-full inline-flex items-center justify-center px-6 py-3 border-2 border-secondary font-bold rounded-lg text-secondary hover:bg-secondary hover:text-dark-bg transition duration-300">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                                    Download Full Curriculum PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Brochure Gate Modal (Z-102) - NEW -->
+    <div id="brochure-gate-modal" class="hidden fixed inset-0 z-[102] overflow-y-auto">
+        <!-- Modal Backdrop -->
+        <div class="modal-backdrop fixed inset-0 transition-opacity" onclick="closeBrochureGateModal()"></div>
+
+        <!-- Modal Content Container -->
+        <div class="flex items-center justify-center min-h-screen p-4 sm:p-8">
+            <div id="brochure-content" class="relative bg-card-bg rounded-2xl shadow-2xl w-full max-w-md p-8 transform transition-all border-4 border-secondary/70">
+                
+                <!-- Close Button -->
+                <button onclick="closeBrochureGateModal()" class="absolute top-4 right-4 text-gray-400 hover:text-secondary transition duration-300 p-2 rounded-full hover:bg-gray-800">
+                    <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+
+                <!-- Modal Header -->
+                <div class="text-center mb-8">
+                    <h3 class="text-3xl font-extrabold text-secondary">Instant Brochure Access</h3>
+                    <p class="text-gray-300 mt-2 text-md">Provide your details to unlock and download the full curriculum guide for <strong id="brochure-course-name" class="text-primary"></strong>.</p>
+                </div>
+
+                <!-- Brochure Form -->
+                <form id="brochure-form" onsubmit="handleBrochureDownload(event)">
+                    <input type="hidden" id="brochure-hidden-course" name="course_name">
+                    <div class="space-y-6">
+                        <!-- Name Field -->
+                        <div>
+                            <label for="brochure-name" class="block text-sm font-semibold text-gray-300 mb-2">Full Name</label>
+                            <input type="text" id="brochure-name" name="name" required
+                                class="w-full px-4 py-3 bg-dark-bg border border-gray-600 rounded-lg text-gray-100 focus:ring-secondary focus:border-secondary transition duration-200 shadow-inner"
+                                placeholder="Your Name">
+                        </div>
+
+                        <!-- Phone Number Field -->
+                        <div>
+                            <label for="brochure-phone" class="block text-sm font-semibold text-gray-300 mb-2">Phone Number</label>
+                            <input type="tel" id="brochure-phone" name="phone" required pattern="[0-9]{10}"
+                                class="w-full px-4 py-3 bg-dark-bg border border-gray-600 rounded-lg text-gray-100 focus:ring-secondary focus:border-secondary transition duration-200 shadow-inner"
+                                placeholder="10-digit number (e.g., 9876543210)">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                                class="w-full mt-6 px-4 py-4 bg-secondary text-dark-bg font-extrabold rounded-xl hover:bg-cyan-400 transition duration-300 shadow-xl transform hover:scale-[1.01] ring-2 ring-secondary/50">
+                            Download Now
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Success Message (hidden by default) -->
+                <div id="brochure-success" class="hidden text-center pt-4">
+                    <svg class="h-16 w-16 text-secondary mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M7 11l5 5 5-5m-5 5V4"></path></svg>
+                    <p class="text-2xl font-bold text-gray-100">Download Ready!</p>
+                    <p class="text-md text-gray-300 mt-2">The curriculum PDF has been sent to your device. We will contact you shortly to discuss your learning goals!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Sticky Mobile Enrollment Bar (DUAL CTA - ENHANCED) -->
+    <div class="fixed bottom-0 left-0 right-0 md:hidden z-40 bg-card-bg border-t-4 border-primary shadow-[0_-5px_20px_rgba(0,0,0,0.5)] p-3">
+        <div class="flex justify-between items-center max-w-xl mx-auto space-x-3">
+            <!-- Functional Link: Replace +919876543210 with your actual business number! -->
+            <a href="tel:+919876543210" class="flex-1 text-center px-3 py-3 bg-slate-700 text-gray-200 font-bold rounded-lg hover:bg-slate-600 transition duration-300 flex items-center justify-center text-sm">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 00.948-.684l1.498-4.493a1 1 0 01.993-.844h4.722a1 1 0 01.993.844l1.498 4.493a1 1 0 00.948.684H19a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 9h2m-2 4h2m-2 4h2"></path></svg>
+                Contact Now
+            </a>
+            <button id="sticky-enroll-btn" onclick="openModal()" class="flex-1 px-3 py-3 bg-primary text-white font-extrabold rounded-lg shadow-lg hover:bg-violet-700 transition duration-300 text-sm">
+                Enroll ₹4,999
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript for Modal Control, Typing Effect, and Smooth Scroll -->
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* -------------------------
+       SAFE ELEMENT HELPER
+    ------------------------- */
+    function get(id) {
+        return document.getElementById(id);
+    }
+
+    /* -------------------------
+       MOBILE MENU
+    ------------------------- */
+    window.toggleMobileMenu = function () {
+        const menu = get('mobile-menu');
+        if (!menu) return;
+        menu.classList.toggle('hidden');
+    };
+
+    /* -------------------------
+       ENROLLMENT MODAL
+    ------------------------- */
+    window.openModal = function (courseName = '') {
+        const modal = get('enrollment-modal');
+        if (!modal) return;
+
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+
+        const form = get('enrollment-form');
+        const success = get('enrollment-success');
+
+        if (form) form.classList.remove('hidden');
+        if (success) success.classList.add('hidden');
+
+        const select = form?.querySelector("select[name='course']");
+        if (courseName && select) {
+            select.value = courseName;
+        }
+    };
+
+    window.closeModal = function () {
+        const modal = get('enrollment-modal');
+        if (!modal) return;
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    };
+
+    /* -------------------------
+       ENROLLMENT HANDLER
+    ------------------------- */
+    window.handleEnrollment = function (event) {
+        event.preventDefault();
+
+        const form = get('enrollment-form');
+        const success = get('enrollment-success');
+        if (!form || !success) return;
+
+        const formData = new FormData(form);
+        const email = formData.get('email');
+        const course = formData.get('course') || '';
+
+        console.log("Lead Captured:", {
+            name: formData.get('name'),
+            email,
+            course
+        });
+
+        form.classList.add('hidden');
+        success.classList.remove('hidden');
+    };
+
+    /* -------------------------
+       NEWSLETTER
+    ------------------------- */
+    window.handleNewsletterSignup = function (event) {
+        event.preventDefault();
+
+        const form = get('newsletter-form');
+        if (!form) return;
+
+        console.log("Newsletter Signup:", get('newsletter-email')?.value);
+        form.reset();
+        alert("Subscribed successfully.");
+    };
+
+    /* -------------------------
+       FAQ
+    ------------------------- */
+    window.toggleFAQ = function (button) {
+        const answer = button.nextElementSibling;
+        const icon = button.querySelector("span");
+
+        if (!answer) return;
+
+        answer.classList.toggle("hidden");
+        if (icon) {
+            icon.textContent = answer.classList.contains("hidden") ? "+" : "−";
+        }
+    };
+
+    /* -------------------------
+       SCROLL TO TOP
+    ------------------------- */
+    const scrollBtn = get('scroll-to-top');
+    if (scrollBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) {
+                scrollBtn.classList.remove('scroll-top-hidden');
+                scrollBtn.classList.add('scroll-top-visible');
+            } else {
+                scrollBtn.classList.remove('scroll-top-visible');
+                scrollBtn.classList.add('scroll-top-hidden');
+            }
+        });
+    }
+
+});
+</script>
+</body>
+</html>
