@@ -27,6 +27,14 @@
         }
     </script>
     <style>
+        @keyframes fadeInSmooth {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+    animation: fadeInSmooth 0.6s ease forwards;
+}
         /* Custom styles for glowing and premium effects */
         .glow-text {
             /* Enhancing the glow effect for a futuristic feel */
@@ -209,7 +217,7 @@
 
         <!-- Logo -->
         <a href="#" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            ZERO<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">DAY
+            Zero<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Day
             </span>
             <span class="font-light text-gray-400 ml-2">
             Learn
@@ -243,7 +251,14 @@
                 Outcomes
                 <span class="absolute left-0 -bottom-2 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
             </a>
-
+            <a href="#academy" class="relative group transition duration-300">
+                Academy
+                <span class="absolute left-0 -bottom-2 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#zquiz" class="relative group transition duration-300">
+                ZQuiz
+                <span class="absolute left-0 -bottom-2 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+            </a>
             <!-- Apply Button -->
             <a href="#enroll"
                class="px-6 py-2 border border-gray-700 rounded-xl text-white text-sm font-semibold hover:border-primary hover:text-primary transition duration-300">
@@ -274,7 +289,7 @@
 
         <!-- Small Elite Tag -->
         <p class="text-sm uppercase tracking-[0.3em] text-gray-400 font-semibold">
-            ZeroDay Learn • Founding Cohort 2025
+            ZeroDay Learn • Elite Cohort 2026
         </p>
 
         <!-- Main Heading -->
@@ -340,26 +355,25 @@
 
         <!-- Description -->
         <p class="mt-6 text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            An advanced, closed-room lab experience focused on real-world 
-            red teaming operations and AI security exploitation techniques.
+            An advanced, execution focused program centered on real world offensive cyber security operations, penetration testing methodologies, and applied AI training built for serious practitioners.
         </p>
 
         <!-- Feature Blocks -->
         <div class="mt-16 grid sm:grid-cols-3 gap-8 max-w-5xl mx-auto text-left">
 
             <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
-                <h4 class="text-white font-bold text-lg mb-2">Enterprise Red Team Labs</h4>
-                <p class="text-gray-400">Simulated attack scenarios used in real corporate environments.</p>
+                <h4 class="text-white font-bold text-lg mb-2">Offensive Security Frameworks</h4>
+                <p class="text-gray-400">Industry grade methodologies covering network, web, mobile and cloud penetration testing.</p>
             </div>
 
             <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
-                <h4 class="text-white font-bold text-lg mb-2">AI Security Exploitation</h4>
-                <p class="text-gray-400">Prompt injection, LLM manipulation & model abuse techniques.</p>
+                <h4 class="text-white font-bold text-lg mb-2">AI Engineering & Security</h4>
+                <p class="text-gray-400">Deep learning, LLM architecture, adversarial AI, and secure system design.</p>
             </div>
 
             <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
-                <h4 class="text-white font-bold text-lg mb-2">Selective Cohort</h4>
-                <p class="text-gray-400">Limited participants per session. Serious learners only.</p>
+                <h4 class="text-white font-bold text-lg mb-2">Elite Intake Model</h4>
+                <p class="text-gray-400">Limited seats. High standards. Active, hands on learning. Performance driven environment.</p>
             </div>
 
         </div>
@@ -412,7 +426,7 @@
 
                 <div class="mb-6">
                     <h3 class="text-3xl font-bold text-white">
-                        Cyber Security
+                        Enterprise Cyber Security
                     </h3>
                     <p class="mt-3 text-gray-400">
                         Advanced Networking and Ethical Hacking.
@@ -420,16 +434,16 @@
                 </div>
 
                 <div class="space-y-4 text-gray-300 text-lg">
-                    <p>• Real-world VAPT & Active Directory attacks</p>
-                    <p>• Cloud & Kubernetes Security</p>
-                    <p>• Red Team simulation labs</p>
-                    <p>• Industry-grade reporting & methodology</p>
+                    <p>• Fundamentals of Linux and Windows</p>
+                    <p>• Advanced Networking</p>
+                    <p>• Network Penetration Testing</p>
+                    <p>• Web Application Penetration Testing</p>
                 </div>
 
                 <div class="mt-10 flex justify-between items-center">
                     <div>
-                        <span class="text-4xl font-extrabold text-white">₹4,999</span>
-                        <span class="ml-3 text-gray-500 line-through text-xl">₹11,999</span>
+                        <span class="text-4xl font-extrabold text-white">₹9,999</span>
+                        <span class="ml-3 text-gray-500 line-through text-xl">₹24,999</span>
                     </div>
                     <button onclick="openModal('Cyber Security')"
                         class="px-6 py-3 bg-primary text-white font-semibold rounded-xl hover:bg-violet-700 transition duration-300">
@@ -459,8 +473,8 @@
 
                 <div class="mt-10 flex justify-between items-center">
                     <div>
-                        <span class="text-4xl font-extrabold text-white">₹4,999</span>
-                        <span class="ml-3 text-gray-500 line-through text-xl">₹11,999</span>
+                        <span class="text-4xl font-extrabold text-white">₹9,999</span>
+                        <span class="ml-3 text-gray-500 line-through text-xl">₹24,999</span>
                     </div>
                     <button onclick="openModal('AI & Machine Learning')"
                         class="px-6 py-3 bg-secondary text-dark-bg font-semibold rounded-xl hover:bg-cyan-400 transition duration-300">
@@ -698,21 +712,11 @@
         <div class="flex flex-wrap justify-center items-center gap-16 text-gray-400 text-xl font-semibold">
 
             <span class="opacity-60 hover:opacity-100 transition duration-300">
-                ISO 9001
+                ISO
             </span>
-
             <span class="opacity-60 hover:opacity-100 transition duration-300">
-                Skill India
+                MSME
             </span>
-
-            <span class="opacity-60 hover:opacity-100 transition duration-300">
-                NASSCOM
-            </span>
-
-            <span class="opacity-60 hover:opacity-100 transition duration-300">
-                Certified
-            </span>
-
         </div>
 
     </div>
@@ -737,7 +741,7 @@
         </h2>
 
         <p class="mt-8 text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
-            A disciplined two-phase tuition model designed to align commitment with performance.
+            A disciplined two phase tuition model designed to align commitment with performance.
         </p>
 
         <!-- Timeline Flow -->
@@ -885,18 +889,18 @@
         <div class="mt-16 grid sm:grid-cols-3 gap-8 text-left max-w-4xl mx-auto">
 
             <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
-                <h4 class="text-white font-bold text-lg mb-2">Selective Intake</h4>
-                <p class="text-gray-400">Limited seats to maintain training intensity and quality.</p>
+                <h4 class="text-white font-bold text-lg mb-2">High Intensity Training</h4>
+                <p class="text-gray-400">Execution driven sessions designed to build real world Offensive Security and AI engineering expertise.</p>
             </div>
 
             <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
                 <h4 class="text-white font-bold text-lg mb-2">Structured Mentorship</h4>
-                <p class="text-gray-400">Direct guidance from experienced industry professionals.</p>
+                <p class="text-gray-400">Direct guidance with practical roadmaps, performance tracking, and continuous technical feedback.</p>
             </div>
 
             <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
                 <h4 class="text-white font-bold text-lg mb-2">Career Acceleration</h4>
-                <p class="text-gray-400">Portfolio building, mock interviews & strategic preparation.</p>
+                <p class="text-gray-400">Portfolio development, real world project exposure, interview simulations, and strategic positioning.</p>
             </div>
 
         </div>
@@ -905,15 +909,18 @@
         <div class="mt-20">
 
             <p class="text-gray-500 text-lg mb-4">
-                Founding Tuition
+                Elite Cohort Tution
             </p>
 
             <p class="text-5xl font-extrabold text-white">
-                ₹4,999
+                ₹9,999
             </p>
+            <br>
+        
+            <span class="ml-3 text-gray-500 line-through text-xl">₹24,999</span>
 
             <p class="text-gray-500 mt-4">
-                Payment plans available upon approval.
+                Student discount and Payment plans available upon approval.
             </p>
 
         </div>
@@ -1066,11 +1073,11 @@
                 <!-- Social Links -->
                 <div class="flex md:justify-end gap-6 mt-8 text-gray-500 text-lg">
 
-                    <a href="#" class="hover:text-primary transition duration-300">
+                    <a href="https://www.instagram.com/zerodaylearn" class="hover:text-primary transition duration-300">
                         Instagram
                     </a>
 
-                    <a href="#" class="hover:text-secondary transition duration-300">
+                    <a href="https://www.linkedin.com/company/zerodaylearn" class="hover:text-secondary transition duration-300">
                         LinkedIn
                     </a>
 
@@ -1087,7 +1094,7 @@
         <!-- Bottom Divider -->
         <div class="border-t border-gray-900 mt-16 pt-8 text-center text-gray-500 text-sm">
 
-            © 2025 ZeroDay Learn.  
+            © 2026 ZeroDay Learn.  
             Building disciplined technology leaders.
 
         </div>
@@ -1127,7 +1134,8 @@
         </div>
 
         <!-- Form -->
-        <form id="enrollment-form" onsubmit="handleEnrollment(event)" class="space-y-6">
+        <input type="hidden" name="_subject" value="New ZeroDay Learn Application">
+        <form id="enrollment-form" action="https://formspree.io/f/xnjbkdov" method="POST" class="space-y-6">
 
             <!-- Name -->
             <input type="text" name="name" required
@@ -1457,31 +1465,42 @@ document.addEventListener("DOMContentLoaded", function () {
         modal.classList.add('hidden');
         document.body.style.overflow = 'auto';
     };
-
     /* -------------------------
-       ENROLLMENT HANDLER
-    ------------------------- */
-    window.handleEnrollment = function (event) {
-        event.preventDefault();
+   AJAX ENROLLMENT (Premium)
+------------------------- */
+const enrollmentForm = document.getElementById("enrollment-form");
+const enrollmentSuccess = document.getElementById("enrollment-success");
 
-        const form = get('enrollment-form');
-        const success = get('enrollment-success');
-        if (!form || !success) return;
+if (enrollmentForm) {
+    enrollmentForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-        const formData = new FormData(form);
-        const email = formData.get('email');
-        const course = formData.get('course') || '';
+        const formData = new FormData(enrollmentForm);
 
-        console.log("Lead Captured:", {
-            name: formData.get('name'),
-            email,
-            course
-        });
+        try {
+            const response = await fetch(enrollmentForm.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
 
-        form.classList.add('hidden');
-        success.classList.remove('hidden');
-    };
+            if (response.ok) {
+                enrollmentForm.classList.add("hidden");
+                enrollmentSuccess.classList.remove("hidden");
+                enrollmentSuccess.classList.add("animate-fadeIn");
 
+                enrollmentForm.reset();
+            } else {
+                alert("Something went wrong. Please try again.");
+            }
+
+        } catch (error) {
+            alert("Network error. Please try again.");
+        }
+    });
+}
     /* -------------------------
        NEWSLETTER
     ------------------------- */
