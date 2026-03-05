@@ -27,6 +27,59 @@
         }
     </script>
     <style>
+        .hero-spotlight {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+        600px circle at var(--x) var(--y),
+        rgba(139,92,246,0.15),
+        transparent 40%
+    );
+}
+        .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(circle at center, black 30%, transparent 80%);
+    animation: gridMove 25s linear infinite;
+}
+
+@keyframes gridMove {
+    from {
+        transform: translateY(0px);
+    }
+    to {
+        transform: translateY(60px);
+    }
+}
+        .scroll-reveal{
+opacity:0;
+transform:translateY(40px);
+transition:all 0.8s ease;
+}
+
+.scroll-reveal.active{
+opacity:1;
+transform:translateY(0);
+}
+
+    @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animated-gradient {
+    background: linear-gradient(90deg,#8B5CF6,#06B6D4,#8B5CF6);
+    background-size: 200% 200%;
+    animation: gradientMove 6s ease infinite;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
         @keyframes fadeInSmooth {
     from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
@@ -208,20 +261,16 @@
 
     </style>
 </head>
-<body class="bg-dark-bg text-gray-100 font-sans">
+<body class="bg-dark-bg text-gray-100 font-sans pb-20">
 
     <!-- Header & Navigation -->
     <!-- Ultra Premium Header & Navigation -->
-<header class="fixed top-0 w-full z-50 bg-black/70 backdrop-blur-xl border-b border-gray-900 transition-all duration-500">
+<header id="main-header" class="fixed top-0 w-full z-50 bg-black/70 backdrop-blur-xl border-b border-gray-900 transition-all duration-500">
     <div class="max-w-7xl mx-auto px-8 py-5 flex justify-between items-center">
 
         <!-- Logo -->
         <a href="#" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            Zero<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Day
-            </span>
-            <span class="font-light text-gray-400 ml-2">
-            Learn
-            </span>
+            Zero<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">Day</span><span class="font-light text-gray-400 ml-2">Learn</span>
         </a>
 
         <!-- Desktop Navigation -->
@@ -268,24 +317,49 @@
         </nav>
 
         <!-- Mobile Menu Button -->
-        <button class="md:hidden text-gray-300 hover:text-white transition duration-300" onclick="toggleMobileMenu()">
-            <svg class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M4 6h16M4 12h16m-7 6h7" />
-            </svg>
-        </button>
+        <button class="md:hidden text-gray-300 hover:text-white transition duration-300"
+onclick="toggleMobileMenu()">
+
+<svg id="hamburger-icon" class="h-7 w-7 transition-all duration-300"
+fill="none" viewBox="0 0 24 24" stroke="currentColor">
+
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+d="M4 6h16M4 12h16m-7 6h7"/>
+
+</svg>
+
+</button>
 
     </div>
 </header>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="md:hidden fixed top-[72px] left-0 w-full h-[calc(100vh-72px)] overflow-y-auto bg-black border-b border-gray-900 px-6 py-6 space-y-4 text-gray-300 opacity-0 -translate-y-6 pointer-events-none transition-all duration-500 z-50">
+
+<a href="#courses" onclick="toggleMobileMenu()" class="block hover:text-white">Programs</a>
+<a href="#weekend-pass" onclick="toggleMobileMenu()" class="block hover:text-white">Pro Series</a>
+<a href="#project-rescue" onclick="toggleMobileMenu()" class="block hover:text-white">Intervention</a>
+<a href="#features" onclick="toggleMobileMenu()" class="block hover:text-white">Advantage</a>
+<a href="#testimonials" onclick="toggleMobileMenu()" class="block hover:text-white">Outcomes</a>
+<a href="#academy" onclick="toggleMobileMenu()" class="block hover:text-white">Academy</a>
+<a href="#zquiz" onclick="toggleMobileMenu()" class="block hover:text-white">ZQuiz</a>
+
+<a href="#enroll" onclick="toggleMobileMenu()"
+class="block mt-4 px-4 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-xl text-center font-semibold">
+Apply
+</a>
+
+</div>
 
     <!-- Hero Section -->
-    <main class="pt-19 pb-19">
-        <section class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-8 text-center pt-24 pb-20 min-h-[85vh] flex items-center relative overflow-hidden">
+    <main class="pt-16 md:pt- pb-16">
+        <section class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-8 text-center pt-10 sm:pt-12 md:pt-20 pb-2 md:pb-12 flex items-start md:items-center justify-center relative overflow-hidden">
+        <div class="hero-grid"></div>
+        <div class="hero-spotlight"></div>
 
     <!-- Soft Premium Gradient Glow -->
     <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-40 pointer-events-none"></div>
 
-    <div class="relative space-y-10">
+    <div class="relative space-y-6 sm:space-y-8 max-w-5xl mx-auto">
 
         <!-- Small Elite Tag -->
         <p class="text-sm uppercase tracking-[0.3em] text-gray-400 font-semibold">
@@ -293,12 +367,12 @@
         </p>
 
         <!-- Main Heading -->
-        <h1 class="text-5xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight leading-tight text-white">
-            Build What  
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
-                The Future Demands.
-            </span>
-        </h1>
+        <h1 class="text-4xl sm:text-6xl lg:text-[6.5rem] font-extrabold tracking-tight leading-tight text-white">
+    Build What  
+    <span class="animated-gradient">
+        The Future Demands.
+    </span>
+</h1>
 
         <!-- Sub Text -->
         <p class="text-xl sm:text-2xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
@@ -307,10 +381,10 @@
         </p>
 
         <!-- CTA Buttons -->
-        <div class="pt-10 flex flex-col sm:flex-row justify-center gap-6">
+        <div class="pt-10 sm:pt-12 flex flex-col sm:flex-row justify-center gap-5 sm:gap-6 animate-fadeIn">
 
             <button onclick="openModal()"
-    class="group relative inline-flex items-center justify-center px-12 py-5 overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-secondary text-white font-semibold text-lg shadow-[0_20px_60px_rgba(139,92,246,0.4)] transition-all duration-500 hover:scale-[1.02]">
+    class="group relative inline-flex items-center justify-center px-10 sm:px-12 py-4 sm:py-5 overflow-hidden rounded-2xl bg-gradient-to-r from-primary to-secondary text-white font-semibold text-lg shadow-[0_20px_60px_rgba(139,92,246,0.4)] transition-all duration-500 hover:scale-[1.02]">
 
     <span class="relative z-10 flex items-center gap-3">
         Begin Your Application
@@ -324,7 +398,7 @@
 </button>
 
             <a href="#courses"
-                class="px-10 py-4 border border-gray-700 text-gray-300 text-lg font-semibold rounded-2xl hover:border-secondary hover:text-secondary transition duration-300">
+                class="px-8 sm:px-10 py-4 border border-gray-700 text-gray-300 text-lg font-semibold rounded-2xl hover:border-secondary hover:text-secondary transition duration-300">
                 Explore Programs
             </a>
 
@@ -399,7 +473,7 @@
 </section>
 
         <!-- Course Offerings Section -->
-        <section id="courses" class="pt-24 pb-20 bg-gradient-to-b from-dark-bg to-black relative overflow-hidden">
+        <section id="courses" class="scroll-reveal pt-24 pb-20 bg-gradient-to-b from-dark-bg to-black relative overflow-hidden">
 
     <!-- Subtle Premium Glow -->
     <div class="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-secondary/5 pointer-events-none"></div>
@@ -436,8 +510,8 @@
                 <div class="space-y-4 text-gray-300 text-lg">
                     <p>• Fundamentals of Linux and Windows</p>
                     <p>• Advanced Networking</p>
-                    <p>• Network Penetration Testing</p>
-                    <p>• Web Application Penetration Testing</p>
+                    <p>• Network & Web Application Testing</p>
+                    <p>• Mobile Application Testing</p>
                 </div>
 
                 <div class="mt-10 flex justify-between items-center">
@@ -559,7 +633,7 @@
         <!-- END NEW SECTION -->
 
         <!-- Key Features/Why Choose Us Section -->
-        <section id="features" class="py-12 bg-black relative overflow-hidden">
+        <section id="features" class="scroll-reveal py-12 bg-black relative overflow-hidden">
 
     <!-- Subtle Premium Glow -->
     <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-30 pointer-events-none"></div>
@@ -629,7 +703,7 @@
 </section>
 
         <!-- Testimonials/Success Stories Section -->
-        <section id="testimonials" class="py-32 bg-black relative overflow-hidden">
+        <section id="testimonials" class="scroll-reveal py-32 bg-black relative overflow-hidden">
 
     <!-- Soft Background Glow -->
     <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-30 pointer-events-none"></div>
@@ -798,7 +872,7 @@
 </section>
         
         <!-- FAQ Section (UPDATED FOR CONSISTENCY) -->
-        <section id="faq" class="pt-20 pb-12 bg-black relative overflow-hidden">
+        <section id="faq" class="scroll-reveal pt-20 pb-12 bg-black relative overflow-hidden">
 
     <!-- Subtle Glow -->
     <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-20 pointer-events-none"></div>
@@ -938,7 +1012,7 @@
     </main>
 
     <!-- NEW SECTION: Newsletter Signup -->
-    <section id="newsletter" class="pt-16 pb-24 bg-black relative overflow-hidden">
+    <section id="newsletter" class="scroll-reveal pt-16 pb-24 bg-black relative overflow-hidden">
 
     <!-- Subtle Premium Glow -->
     <div class="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-secondary/10 blur-3xl opacity-30 pointer-events-none"></div>
@@ -964,7 +1038,7 @@
 
         <!-- Form -->
         <form id="newsletter-form" onsubmit="handleNewsletterSignup(event)"
-              class="mt-16 flex flex-col sm:flex-row justify-center gap-6 max-w-2xl mx-auto">
+              class="mt-16 flex flex-col sm:flex-row w-full sm:w-auto justify-center gap-6 max-w-2xl mx-auto">
 
             <input type="email"
                    id="newsletter-email"
@@ -1062,9 +1136,9 @@
                     </p>
 
                     <p>
-                        <a href="tel:+919876543210" 
+                        <a href="tel:+919514164308" 
                            class="hover:text-white transition duration-300">
-                            +91 98765 43210
+                            +91 9514164308
                         </a>
                     </p>
 
@@ -1148,7 +1222,7 @@
                     +91
                 </span>
                 <input type="tel" name="phone" required pattern="[0-9]{10}"
-                    placeholder="9876543210"
+                    placeholder="XXXXXXXXXX"
                     class="w-full px-6 py-4 bg-black border border-gray-800 rounded-r-2xl text-white focus:outline-none focus:border-primary transition duration-300">
             </div>
 
@@ -1163,9 +1237,10 @@
 
                 <option value="" disabled selected>Select Program</option>
                 <option value="Cyber Security">Cyber Security</option>
-                <option value="AI & Machine Learning">AI & Machine Learning</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
                 <option value="ZeroDay Pro Series">ZeroDay Pro Series</option>
                 <option value="Project Intervention">Project Intervention</option>
+                <option value="Campus Ambassador">Campus Ambassador</option>
 
             </select>
 
@@ -1407,18 +1482,59 @@
     <div class="fixed bottom-0 left-0 right-0 md:hidden z-40 bg-card-bg border-t-4 border-primary shadow-[0_-5px_20px_rgba(0,0,0,0.5)] p-3">
         <div class="flex justify-between items-center max-w-xl mx-auto space-x-3">
             <!-- Functional Link: Replace +919876543210 with your actual business number! -->
-            <a href="tel:+919876543210" class="flex-1 text-center px-3 py-3 bg-slate-700 text-gray-200 font-bold rounded-lg hover:bg-slate-600 transition duration-300 flex items-center justify-center text-sm">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 00.948-.684l1.498-4.493a1 1 0 01.993-.844h4.722a1 1 0 01.993.844l1.498 4.493a1 1 0 00.948.684H19a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 9h2m-2 4h2m-2 4h2"></path></svg>
+            <a href="tel:+919514164308" class="flex-1 text-center px-3 py-3 bg-slate-700 text-gray-200 font-bold rounded-lg hover:bg-slate-600 transition duration-300 flex items-center justify-center text-sm">
                 Contact Now
             </a>
-            <button id="sticky-enroll-btn" onclick="openModal()" class="flex-1 px-3 py-3 bg-primary text-white font-extrabold rounded-lg shadow-lg hover:bg-violet-700 transition duration-300 text-sm">
-                Enroll ₹4,999
+            <button id="sticky-enroll-btn" onclick="openModal()" class="flex-1 px-3 py-3 bg-gradient-to-r from-primary to-secondary text-white font-extrabold rounded-lg shadow-lg hover:opacity-90 transition duration-300 text-sm">
+                Enroll Now
             </button>
         </div>
     </div>
 
     <!-- JavaScript for Modal Control, Typing Effect, and Smooth Scroll -->
     <script>
+        const spotlight = document.querySelector(".hero-spotlight");
+
+document.addEventListener("mousemove", (e) => {
+
+spotlight.style.setProperty("--x", e.clientX + "px");
+spotlight.style.setProperty("--y", e.clientY + "px");
+
+});
+        const header = document.getElementById("main-header");
+
+window.addEventListener("scroll", () => {
+
+if(window.scrollY > 80){
+
+header.classList.add("py-2");
+header.classList.remove("py-5");
+
+}else{
+
+header.classList.add("py-5");
+header.classList.remove("py-2");
+
+}
+
+});
+        const reveals = document.querySelectorAll(".scroll-reveal");
+
+window.addEventListener("scroll", () => {
+
+reveals.forEach(el => {
+
+const windowHeight = window.innerHeight;
+const elementTop = el.getBoundingClientRect().top;
+
+if(elementTop < windowHeight - 80){
+el.classList.add("active");
+}
+
+});
+
+});
+        
 document.addEventListener("DOMContentLoaded", function () {
 
     /* -------------------------
@@ -1431,11 +1547,22 @@ document.addEventListener("DOMContentLoaded", function () {
     /* -------------------------
        MOBILE MENU
     ------------------------- */
-    window.toggleMobileMenu = function () {
-        const menu = get('mobile-menu');
-        if (!menu) return;
-        menu.classList.toggle('hidden');
-    };
+    window.toggleMobileMenu = function(){
+
+const menu = document.getElementById("mobile-menu");
+const icon = document.getElementById("hamburger-icon");
+
+if(menu.classList.contains("opacity-0")){
+
+menu.classList.remove("opacity-0","-translate-y-6","pointer-events-none");
+
+}else{
+
+menu.classList.add("opacity-0","-translate-y-6","pointer-events-none");
+
+}
+
+};
 
     /* -------------------------
        ENROLLMENT MODAL
