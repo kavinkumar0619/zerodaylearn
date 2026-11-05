@@ -1,1834 +1,601 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZeroDay Learn | Elite Cyber Security Programs</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --blue: #4BB8E8;
-            --blue-dark: #2A9FD4;
-            --blue-light: #E8F6FD;
-            --yellow: #F5C518;
-            --yellow-dark: #D4A914;
-            --black: #1A1A1A;
-            --gray: #6B7280;
-            --gray-light: #F3F4F6;
-            --white: #FFFFFF;
-            --border: #E5E7EB;
-            --shadow: 0 4px 24px rgba(75,184,232,0.15);
-            --shadow-yellow: 0 4px 24px rgba(245,197,24,0.3);
-            --shadow-dark: 0 8px 40px rgba(26,26,26,0.12);
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZerodayLearn | Hands-on Offensive Security Labs & Live Training</title>
+<meta name="description" content="Learn offensive security by doing. 100+ guided labs across 13 attack tracks in safe, controlled environments, exploit real vulnerabilities, then learn the fix. Mapped to the OWASP Top 10 (2025). Free labs, self-serve Pro, and an 8-week live training cohort.">
+<meta name="keywords" content="offensive security training, penetration testing labs, ethical hacking course India, OWASP Top 10 2025, hands-on hacking labs, web security training, bug bounty practice, live cyber security training">
+<meta name="author" content="ZerodayLearn">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://zerodaylearn.com/">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ZerodayLearn">
+<meta property="og:title" content="ZerodayLearn | Hands-on Offensive Security Labs & Live Training">
+<meta property="og:description" content="100+ guided labs across 13 attack tracks in safe, controlled environments. Exploit real vulnerabilities, then learn the fix. Free labs, Pro, and a live training cohort.">
+<meta property="og:url" content="https://zerodaylearn.com/">
+<meta property="og:image" content="https://zerodaylearn.com/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ZerodayLearn | Hands-on Offensive Security Labs & Live Training">
+<meta name="twitter:description" content="100+ guided labs across 13 attack tracks. Exploit real vulnerabilities, then learn the fix. Free to start.">
+<meta name="twitter:image" content="https://zerodaylearn.com/assets/og.png">
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: #FAFBFF;
-            color: var(--black);
-            overflow-x: hidden;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
 
-        /* ─── SCROLLBAR ─── */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--gray-light); }
-        ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    { "@type": "Organization", "@id": "https://zerodaylearn.com/#org", "name": "ZerodayLearn", "url": "https://zerodaylearn.com/", "logo": "https://zerodaylearn.com/assets/logo-dark.png", "email": "support@zerodaylearn.com" },
+    { "@type": "Course", "name": "ZerodayLearn, Hands-on Web Security Labs", "description": "Exploit real, deliberately vulnerable applications in safe, controlled environments, then learn the exact fix. 13 attack tracks mapped to the OWASP Top 10 (2025), API Security Top 10 and CWE.", "provider": { "@id": "https://zerodaylearn.com/#org" }, "url": "https://app.zerodaylearn.com/", "offers": [ { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "INR" }, { "@type": "Offer", "name": "Pro", "price": "1299", "priceCurrency": "INR" }, { "@type": "Offer", "name": "Live Training, Enterprise Cyber Security", "price": "14999", "priceCurrency": "INR" } ] },
+    { "@type": "FAQPage", "mainEntity": [
+      { "@type": "Question", "name": "What background is required to join?", "acceptedAnswer": { "@type": "Answer", "text": "No prior experience is mandatory. A disciplined mindset and willingness to learn are enough; the free labs are a great place to begin." } },
+      { "@type": "Question", "name": "What certificate will I receive?", "acceptedAnswer": { "@type": "Answer", "text": "On completing the program and the proctored online exam you receive a ZerodayLearn Certificate of Completion, recognised by industry practitioners. Platform certificates are also publicly verifiable." } }
+    ] }
+  ]
+}
+</script>
 
-        /* ─── HEADER ─── */
-        header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            background: rgba(255,255,255,0.92);
-            backdrop-filter: blur(16px);
-            border-bottom: 2px solid var(--border);
-            transition: all 0.3s ease;
-        }
-        header.scrolled {
-            box-shadow: var(--shadow-dark);
-            border-bottom-color: var(--blue);
-        }
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .logo img { height: 80px; min-width: 180px; width: auto; object-fit: contain; }
+<style>
+  :root{
+    --C:#00B4D8; --C-deep:#0096B8; --Clight:#E6F6FB; --Y:#F5C518; --K:#0A0A0A; --G:#00C896;
+    --ink:#0A0A0F; --ink2:#252840; --ink3:#64698A; --ink4:#A0A5C0;
+    --s1:#FBFCFE; --s2:#F7F8FB; --s3:#EEF0F6; --border:#E2E6F0; --border2:#CDD2E4;
+    --maxw:1300px;
+    --ff:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+    --sh1:0 2px 8px rgba(0,0,0,.07),0 1px 3px rgba(0,0,0,.04);
+    --sh3:0 12px 40px rgba(0,0,0,.14),0 4px 16px rgba(0,0,0,.07);
+    --shY:0 6px 24px rgba(245,197,24,.40);
+    --heroGrad:linear-gradient(160deg,#dceefa 0%,#cce8f5 22%,#c5e8ee 46%,#c8ecdf 70%,#eafaf3 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--ff);background:#fff;color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  .mono{font-family:'Fira Code',monospace}
+  .eyebrow{display:inline-block;font:900 11.5px/1 var(--ff);letter-spacing:1.2px;text-transform:uppercase;color:var(--C)}
+  h2.title{font-size:clamp(28px,4.6vw,44px);font-weight:900;letter-spacing:-1.2px;line-height:1.08;margin:14px 0 14px;color:var(--ink)}
+  .lead{color:var(--ink3);font-size:clamp(15px,1.9vw,17.5px);line-height:1.7;font-weight:500}
+  .accent{color:var(--C)}
+  .mark{background:var(--Y);color:var(--K);padding:1px 11px 3px;box-shadow:var(--shY);display:inline-block;line-height:1.05}
+  .sec{padding-top:92px;padding-bottom:92px}
+  .sec-head{max-width:700px}
+  .sec-head.center{margin:0 auto;text-align:center}
 
-        nav { display: flex; align-items: center; gap: 2rem; }
-        nav a {
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--black);
-            text-decoration: none;
-            position: relative;
-            padding-bottom: 2px;
-            transition: color 0.2s;
-        }
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px; left: 0;
-            width: 0; height: 2px;
-            background: var(--blue);
-            transition: width 0.3s;
-        }
-        nav a:hover { color: var(--blue-dark); }
-        nav a:hover::after { width: 100%; }
-        .nav-apply {
-            background: var(--black) !important;
-            color: var(--white) !important;
-            padding: 0.5rem 1.25rem !important;
-            border-radius: 8px !important;
-            font-weight: 700 !important;
-            transition: background 0.2s, transform 0.2s !important;
-        }
-        .nav-apply:hover { background: var(--blue-dark) !important; transform: translateY(-1px); }
-        .nav-apply::after { display: none !important; }
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;font-size:14.5px;padding:12px 22px;border-radius:12px;border:2px solid transparent;cursor:pointer;transition:background .18s,border-color .18s,color .18s;white-space:nowrap;letter-spacing:-.1px;font-family:var(--ff)}
+  .btn.primary{background:var(--C);color:#fff;border-color:var(--C)}
+  .btn.primary:hover{background:var(--C-deep);border-color:var(--C-deep)}
+  .btn.yellow{background:var(--Y);color:var(--K);border-color:var(--Y)}
+  .btn.yellow:hover{background:#e3b70f;border-color:#e3b70f}
+  .btn.ghost{background:#fff;color:var(--ink);border-color:var(--border2)}
+  .btn.ghost:hover{border-color:var(--C);color:var(--C)}
+  .btn.light{background:var(--Clight);color:var(--C-deep);border-color:transparent}
+  .btn.light:hover{background:#d6eff6}
+  .btn.lg{padding:14px 26px;font-size:15.5px;border-radius:13px}
 
-        /* hamburger */
-        .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-        .hamburger span {
-            display: block; width: 24px; height: 2.5px;
-            background: var(--black); border-radius: 2px;
-            margin: 5px 0; transition: all 0.3s;
-        }
+  /* header */
+  header{position:fixed;inset:0 0 auto 0;z-index:60;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:box-shadow .2s}
+  header.scrolled{box-shadow:0 2px 16px rgba(10,20,40,.06)}
+  .hdr{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .hdr .logo img{height:54px;width:auto;display:block}
+  nav.desk{display:flex;gap:30px}
+  nav.desk a{font-size:14.5px;font-weight:700;color:var(--ink2)}
+  nav.desk a:hover{color:var(--C)}
+  .hdr-cta{display:flex;align-items:center;gap:10px}
+  .hamb{display:none;background:#fff;border:1.5px solid var(--border2);border-radius:10px;width:42px;height:42px;color:var(--ink);cursor:pointer;place-items:center}
+  .mobile-menu{display:none;position:fixed;inset:72px 0 auto 0;background:#fff;border-bottom:1px solid var(--border);padding:14px 22px 20px;z-index:59;flex-direction:column;gap:2px}
+  .mobile-menu.open{display:flex}
+  .mobile-menu a{padding:13px 4px;font-weight:700;color:var(--ink2);border-bottom:1px solid var(--s3)}
+  .mobile-menu .btn{margin-top:14px}
 
-        /* mobile menu */
-        #mobile-menu {
-            display: none;
-            position: fixed;
-            top: 100px; left: 0; right: 0;
-            background: white;
-            border-bottom: 2px solid var(--border);
-            padding: 1.5rem 2rem;
-            z-index: 99;
-            box-shadow: var(--shadow-dark);
-        }
-        #mobile-menu.open { display: block; }
-        #mobile-menu a {
-            display: block;
-            padding: 0.75rem 0;
-            font-weight: 600;
-            color: var(--black);
-            text-decoration: none;
-            border-bottom: 1px solid var(--border);
-            font-size: 1rem;
-        }
-        #mobile-menu a:last-child { border-bottom: none; }
-        #mobile-menu a:hover { color: var(--blue-dark); }
-        .mobile-apply {
-            margin-top: 1rem;
-            display: block;
-            text-align: center;
-            background: var(--black);
-            color: white !important;
-            border-radius: 10px;
-            padding: 0.875rem !important;
-            font-size: 1rem;
-        }
+  /* browser frame (light chrome, dark screenshot inside) */
+  .browser{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--sh3)}
+  .browser .top{display:flex;align-items:center;gap:7px;padding:11px 14px;background:var(--s2);border-bottom:1px solid var(--border)}
+  .browser .top i{width:11px;height:11px;border-radius:50%;display:block}
+  .browser .url{margin-left:12px;background:#fff;border:1px solid var(--border);border-radius:7px;padding:5px 13px;font:600 12px 'Fira Code',monospace;color:var(--ink3);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .browser img{width:100%;display:block}
 
-        /* ─── HERO ─── */
-        .hero {
-            min-height: 100vh;
-            padding-top: 100px;
-            background: linear-gradient(135deg, #FAFBFF 0%, #EBF7FD 50%, #FFF8E0 100%);
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero-bg-shape {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            pointer-events: none;
-        }
-        .hero-bg-shape.s1 {
-            width: 500px; height: 500px;
-            background: rgba(75,184,232,0.12);
-            top: -100px; right: -100px;
-        }
-        .hero-bg-shape.s2 {
-            width: 400px; height: 400px;
-            background: rgba(245,197,24,0.1);
-            bottom: -100px; left: -100px;
-        }
-        /* floating deco dots */
-        .hero-dots {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .dot {
-            position: absolute;
-            border-radius: 50%;
-            animation: floatDot 6s ease-in-out infinite;
-        }
-        @keyframes floatDot {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
+  /* hero */
+  .hero{position:relative;padding:0 0 72px;background:var(--heroGrad);overflow:hidden}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:120px;background:linear-gradient(to bottom,transparent,#fff)}
+  .orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
+  .hero-grid{position:relative;z-index:2;text-align:center}
+  .hero-head{max-width:860px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:88px 0 28px}
+  .eyebrow-pill{display:inline-flex;align-items:center;gap:8px;background:#fff;color:var(--ink2);font:800 11.5px/1 var(--ff);letter-spacing:1px;text-transform:uppercase;padding:9px 15px 9px 13px;border:1px solid var(--border);border-radius:8px;box-shadow:var(--sh1)}
+  .eyebrow-pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--C);box-shadow:0 0 0 3px rgba(0,180,216,.18)}
+  .hero h1{font-size:clamp(38px,6.2vw,64px);font-weight:900;letter-spacing:-2px;line-height:1.02;color:var(--K);margin-top:22px}
+  .hero .sub{margin:22px auto 32px;color:#3c5563;font-size:clamp(15.5px,2vw,18.5px);max-width:600px;line-height:1.6;font-weight:500}
+  .hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+  .signals{display:inline-flex;gap:40px;flex-wrap:wrap;justify-content:center;margin-top:34px;padding-top:26px;border-top:1px solid rgba(10,20,40,.1)}
+  .signals .s b{font-size:24px;font-weight:900;letter-spacing:-.6px;display:block;color:var(--K)}
+  .signals .s span{font-size:12.5px;color:#52708000;color:#5a7585;font-weight:600}
+  .hero-shot{position:relative;max-width:1360px;margin:0 auto}
 
-        .hero-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2.5rem 2rem;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-        .hero-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--yellow);
-            color: var(--black);
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding: 0.4rem 1rem;
-            border-radius: 100px;
-            margin-bottom: 1rem;
-            border: 2px solid var(--black);
-        }
-        .hero-tag::before { content: '⚡'; }
-        .hero-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(3rem, 6vw, 5.5rem);
-            line-height: 0.95;
-            color: var(--black);
-            margin-bottom: 1rem;
-        }
-        .hero-title .blue { color: var(--blue-dark); }
-        .hero-title .yellow-bg {
-            background: var(--yellow);
-            padding: 0 0.25rem;
-            display: inline-block;
-        }
-        .hero-desc {
-            font-size: 1rem;
-            color: var(--gray);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-            font-weight: 500;
-        }
-        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--black);
-            color: white;
-            font-weight: 700;
-            font-size: 1rem;
-            padding: 0.875rem 2rem;
-            border-radius: 10px;
-            border: 2px solid var(--black);
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .btn-primary:hover { background: var(--blue-dark); border-color: var(--blue-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
-        .btn-secondary {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--yellow);
-            color: var(--black);
-            font-weight: 700;
-            font-size: 1rem;
-            padding: 0.875rem 2rem;
-            border-radius: 10px;
-            border: 2px solid var(--black);
-            cursor: pointer;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .btn-secondary:hover { background: var(--yellow-dark); transform: translateY(-2px); box-shadow: var(--shadow-yellow); }
+  /* product tour */
+  .tour{display:flex;flex-direction:column;gap:96px}
+  .row .kick{display:inline-block;font:900 11.5px/1 var(--ff);letter-spacing:1.2px;text-transform:uppercase;color:var(--C)}
+  .row h3{font-size:clamp(23px,3vw,32px);font-weight:900;letter-spacing:-1px;margin:12px 0 12px;line-height:1.12;color:var(--ink)}
+  .row .copy{max-width:800px;margin:0 0 30px}
+  .row p{color:var(--ink3);font-size:15.5px;line-height:1.72;font-weight:500}
+  .row ul{list-style:none;margin:18px 0 0;display:flex;flex-wrap:wrap;gap:10px 28px}
+  .row li{display:flex;gap:10px;font-size:14.5px;color:var(--ink2);font-weight:600}
+  .row li svg{flex:none;color:var(--G);margin-top:4px}
 
-        /* hero visual */
-        .hero-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .hero-card-stack {
-            position: relative;
-            width: 380px;
-            height: 460px;
-        }
-        .stat-card {
-            position: absolute;
-            background: white;
-            border: 2.5px solid var(--black);
-            border-radius: 16px;
-            padding: 1.25rem 1.5rem;
-            box-shadow: 5px 5px 0 var(--black);
-            animation: floatCard 4s ease-in-out infinite;
-        }
-        @keyframes floatCard {
-            0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .stat-card:nth-child(2) { animation-delay: 1.3s; }
-        .stat-card:nth-child(3) { animation-delay: 2.6s; }
-        .stat-card.main {
-            top: 50%; left: 50%;
-            transform: translate(-50%, -52%);
-            width: 220px;
-            text-align: center;
-            animation: none;
-            z-index: 2;
-        }
-        .stat-card.c1 { top: 10px; left: 0; z-index: 1; }
-        .stat-card.c2 { bottom: 10px; right: 0; z-index: 1; }
-        .stat-num {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.5rem;
-            color: var(--blue-dark);
-            line-height: 1;
-        }
-        .stat-label { font-size: 0.8rem; font-weight: 600; color: var(--gray); margin-top: 0.25rem; }
-        .main-icon { font-size: 3rem; margin-bottom: 0.5rem; }
-        .main-title { font-weight: 800; font-size: 1.1rem; color: var(--black); }
-        .main-sub { font-size: 0.8rem; color: var(--gray); margin-top: 0.25rem; }
-        .yellow-badge {
-            display: inline-block;
-            background: var(--yellow);
-            color: var(--black);
-            font-weight: 800;
-            font-size: 0.75rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 100px;
-            border: 2px solid var(--black);
-            margin-top: 0.75rem;
-        }
+  /* compact features */
+  .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .fcard{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:24px;box-shadow:var(--sh1);transition:transform .18s,box-shadow .18s}
+  .fcard:hover{transform:translateY(-3px);box-shadow:var(--sh3)}
+  .fcard .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--Clight);color:var(--C-deep);margin-bottom:15px}
+  .fcard h4{font-size:16px;font-weight:800;margin-bottom:6px}
+  .fcard p{font-size:13.5px;color:var(--ink3);line-height:1.6;font-weight:500}
 
-        /* ─── SECTION COMMONS ─── */
-        section { padding: 5rem 2rem; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        .section-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--blue-dark);
-            margin-bottom: 1rem;
-        }
-        .section-label::before {
-            content: '';
-            display: block;
-            width: 20px; height: 3px;
-            background: var(--yellow);
-            border-radius: 2px;
-        }
-        .section-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            line-height: 1;
-            color: var(--black);
-            margin-bottom: 1rem;
-        }
-        .section-title .blue { color: var(--blue-dark); }
-        .section-title .yellow-bg {
-            background: var(--yellow);
-            padding: 0 0.3rem;
-        }
-        .section-desc {
-            font-size: 1.05rem;
-            color: var(--gray);
-            line-height: 1.7;
-            max-width: 600px;
-        }
+  /* pricing */
+  .pricing-wrap{background:var(--s2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:stretch}
+  .plan{background:#fff;border:1.5px solid var(--border);border-radius:20px;padding:30px;display:flex;flex-direction:column;box-shadow:var(--sh1)}
+  .plan.feat2{border:2px solid var(--C);box-shadow:0 20px 50px -24px rgba(0,180,216,.45);position:relative}
+  .plan.feat2::before{content:"Most popular";position:absolute;top:-12px;left:28px;background:var(--Y);color:var(--K);font:900 11px var(--ff);letter-spacing:.3px;padding:5px 14px;border-radius:999px;box-shadow:var(--shY)}
+  .plan .pn{font:900 12.5px var(--ff);letter-spacing:1px;color:var(--ink3)}
+  .plan .pmrp{font-size:14px;color:var(--ink4);text-decoration:line-through;margin-top:16px}
+  .plan .pp{margin:2px 0;font-size:40px;font-weight:900;letter-spacing:-1.5px;color:var(--ink)}
+  .plan .pp small{font-size:15px;font-weight:700;color:var(--ink3)}
+  .plan .psub{font-size:13.5px;color:var(--ink3);margin:8px 0 20px;min-height:38px;font-weight:500}
+  .plan ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:24px;flex:1}
+  .plan li{display:flex;gap:11px;font-size:14px;color:var(--ink2);font-weight:600}
+  .plan li svg{flex:none;color:var(--G);margin-top:3px}
+  .plan .btn{width:100%}
 
-        /* scroll reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+  /* live */
+  .live-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+  .stages{display:flex;flex-direction:column;gap:10px}
+  .stage{display:flex;gap:16px;background:#fff;border:1.5px solid var(--border);border-radius:13px;padding:16px 18px;box-shadow:var(--sh1)}
+  .stage .no{font:900 15px 'Fira Code',monospace;color:var(--C);flex:none;padding-top:2px}
+  .stage h4{font-size:15px;font-weight:800;color:var(--ink)} .stage p{font-size:13px;color:var(--ink3);font-weight:500}
+  .tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .tools span{font:600 12.5px 'Fira Code',monospace;color:var(--ink2);background:var(--s2);border:1px solid var(--border);padding:6px 11px;border-radius:8px}
+  .live-card{background:var(--K);color:#fff;border-radius:20px;padding:32px;position:sticky;top:92px;box-shadow:0 30px 70px -30px rgba(0,0,0,.5)}
+  .live-card .lt{font:900 12px var(--ff);letter-spacing:1px;text-transform:uppercase;color:var(--Y)}
+  .live-card .lp{font-size:44px;font-weight:900;letter-spacing:-1.5px;margin:10px 0 2px}
+  .live-card .lp small{font-size:14px;color:#b9c0cf;font-weight:600}
+  .live-card .lmeta{color:#aeb6c7;font-size:13.5px;margin-bottom:6px;font-weight:500}
+  .live-card ul{list-style:none;display:flex;flex-direction:column;gap:12px;margin:18px 0 24px}
+  .live-card li{display:flex;gap:11px;font-size:14px;color:#e8ebf2;font-weight:500} .live-card li svg{flex:none;color:var(--G);margin-top:3px}
 
-        /* ─── PRO SERIES ─── */
-        #weekend-pass {
-            background: var(--black);
-            color: white;
-        }
-        #weekend-pass .section-label { color: var(--yellow); }
-        #weekend-pass .section-title { color: white; }
-        #weekend-pass .section-desc { color: #9CA3AF; }
-        .pro-grid {
-            display: grid;
-            grid-template-columns: repeat(3,1fr);
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-        .pro-card {
-            background: #2A2A2A;
-            border: 2px solid #3A3A3A;
-            border-radius: 16px;
-            padding: 2rem;
-            transition: all 0.3s;
-        }
-        .pro-card:hover {
-            border-color: var(--blue);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(75,184,232,0.2);
-        }
-        .pro-icon {
-            width: 48px; height: 48px;
-            background: var(--yellow);
-            border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            border: 2px solid var(--black);
-        }
-        .pro-card h4 { font-weight: 800; font-size: 1.05rem; color: white; margin-bottom: 0.5rem; }
-        .pro-card p { font-size: 0.9rem; color: #9CA3AF; line-height: 1.6; }
-        .pro-cta { margin-top: 3rem; text-align: center; }
-        .pro-cta p { color: #6B7280; margin-bottom: 1rem; font-size: 0.9rem; }
-        .btn-blue {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--blue);
-            color: var(--black);
-            font-weight: 800;
-            font-size: 1rem;
-            padding: 0.875rem 2.5rem;
-            border-radius: 10px;
-            border: 2px solid var(--black);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-blue:hover { background: var(--blue-dark); color: white; transform: translateY(-2px); }
+  /* testimonials */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .quote{background:#fff;border:1.5px solid var(--border);border-radius:16px;padding:26px;box-shadow:var(--sh1)}
+  .quote .stars{color:var(--Y);font-size:14px;letter-spacing:2.5px;margin-bottom:12px}
+  .quote p{font-size:14.5px;color:var(--ink2);line-height:1.72;font-weight:600}
+  .quote .who{display:flex;align-items:center;gap:12px;margin-top:20px}
+  .quote .av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--C),#0077A3);display:grid;place-items:center;font-weight:800;color:#fff;flex:none}
+  .quote .who b{font-size:14px;display:block;color:var(--ink)} .quote .who span{font-size:12px;color:var(--ink3);font-weight:600}
 
-        /* ─── COURSES ─── */
-        #courses { background: #FAFBFF; }
-        .course-wrapper {
-            display: flex;
-            justify-content: center;
-            margin-top: 3rem;
-        }
-        .course-card {
-            background: white;
-            border: 2.5px solid var(--black);
-            border-radius: 20px;
-            padding: 2.5rem;
-            max-width: 700px;
-            width: 100%;
-            box-shadow: 6px 6px 0 var(--black);
-            position: relative;
-            overflow: hidden;
-        }
-        .course-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--blue), var(--yellow));
-        }
-        .course-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            background: var(--blue-light);
-            color: var(--blue-dark);
-            font-size: 0.75rem;
-            font-weight: 800;
-            padding: 0.35rem 0.875rem;
-            border-radius: 100px;
-            border: 1.5px solid var(--blue);
-            margin-bottom: 1.25rem;
-        }
-        .course-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.25rem; color: var(--black); margin-bottom: 0.5rem; }
-        .course-sub { color: var(--gray); font-size: 0.95rem; margin-bottom: 2rem; font-weight: 500; }
-        .course-modules {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.75rem;
-            margin-bottom: 2rem;
-        }
-        .module-item {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--black);
-        }
-        .module-item::before {
-            content: '';
-            width: 10px; height: 10px;
-            background: var(--yellow);
-            border-radius: 50%;
-            border: 2px solid var(--black);
-            flex-shrink: 0;
-        }
-        .course-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-top: 1.5rem;
-            border-top: 2px solid var(--border);
-        }
-        .price-block .price {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 3rem;
-            color: var(--black);
-            line-height: 1;
-        }
-        .price-block .old-price {
-            font-size: 1.1rem;
-            color: var(--gray);
-            text-decoration: line-through;
-            margin-left: 0.5rem;
-        }
-        .price-block .save-tag {
-            display: inline-block;
-            background: var(--yellow);
-            color: var(--black);
-            font-size: 0.7rem;
-            font-weight: 800;
-            padding: 0.2rem 0.6rem;
-            border-radius: 100px;
-            border: 1.5px solid var(--black);
-            margin-left: 0.5rem;
-        }
+  /* faq */
+  .faq{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+  .faq-item{background:#fff;border:1.5px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:var(--sh1)}
+  .faq-q{width:100%;text-align:left;background:none;border:0;color:var(--ink);font-size:15.5px;font-weight:800;padding:19px 22px;display:flex;justify-content:space-between;gap:14px;align-items:center;cursor:pointer;font-family:var(--ff)}
+  .faq-q .pm{color:var(--C);font-size:22px;flex:none;transition:transform .2s;line-height:1}
+  .faq-item.open .faq-q .pm{transform:rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .28s ease;color:var(--ink3);font-size:14.5px;line-height:1.7;font-weight:500}
+  .faq-item.open .faq-a{max-height:320px}
+  .faq-a div{padding:0 22px 20px}
 
-        /* ─── PROJECT INTERVENTION ─── */
-        #project-rescue {
-            background: linear-gradient(135deg, var(--blue-light) 0%, #FFF8E0 100%);
-            border-top: 2px solid var(--border);
-            border-bottom: 2px solid var(--border);
-        }
-        .intervention-grid {
-            display: grid;
-            grid-template-columns: repeat(3,1fr);
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-        .intervention-card {
-            background: white;
-            border: 2.5px solid var(--black);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 4px 4px 0 var(--black);
-            transition: transform 0.2s;
-        }
-        .intervention-card:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--black); }
-        .intervention-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .intervention-card h4 { font-weight: 800; font-size: 1rem; margin-bottom: 0.5rem; }
-        .intervention-card p { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
+  /* cta band (dark anchor) */
+  .ctaband{position:relative;overflow:hidden;background:var(--K);border-radius:24px;padding:58px 40px;text-align:center}
+  .ctaband::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 50% -30%,rgba(0,180,216,.3),transparent 70%)}
+  .ctaband>*{position:relative}
+  .ctaband h2{font-size:clamp(26px,4vw,40px);font-weight:900;letter-spacing:-1.4px;color:#fff}
+  .ctaband p{color:#b9c0cf;margin:14px auto 26px;max-width:520px;font-weight:500}
+  .ctaband .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-        /* ─── FEATURES ─── */
-        #features { background: white; }
-        .features-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        .feature-item {
-            display: flex;
-            gap: 1.25rem;
-            padding: 1.75rem;
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            transition: all 0.2s;
-        }
-        .feature-item:hover {
-            border-color: var(--blue);
-            box-shadow: var(--shadow);
-            transform: translateY(-2px);
-        }
-        .feature-icon {
-            width: 52px; height: 52px;
-            background: var(--yellow);
-            border-radius: 12px;
-            border: 2px solid var(--black);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-        .feature-item h3 { font-weight: 800; font-size: 1rem; margin-bottom: 0.5rem; }
-        .feature-item p { font-size: 0.9rem; color: var(--gray); line-height: 1.6; }
+  /* footer (dark) */
+  footer{background:var(--K);color:#cfd4e2;padding:58px 0 34px}
+  .foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:34px}
+  footer .logo img{height:44px;margin-bottom:16px}
+  footer p.fd{font-size:13.5px;color:#9298ab;max-width:290px;line-height:1.65;font-weight:500}
+  footer h5{font-size:11.5px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#6a7085;margin-bottom:15px}
+  footer ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  footer ul a{font-size:14px;color:#aeb4c6;font-weight:500} footer ul a:hover{color:var(--C)}
+  .foot-bottom{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:42px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);font-size:12.5px;color:#767c92}
+  .foot-bottom a:hover{color:var(--C)}
 
-        /* ─── TESTIMONIALS ─── */
-        #testimonials { background: #FAFBFF; }
-        .testimonials-stack { margin-top: 3rem; display: flex; flex-direction: column; gap: 2rem; }
-        .testi-card {
-            background: white;
-            border: 2.5px solid var(--black);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 5px 5px 0 var(--black);
-            max-width: 800px;
-            position: relative;
-        }
-        .testi-card::before {
-            content: '"';
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 8rem;
-            color: var(--yellow);
-            position: absolute;
-            top: -10px; left: 1.5rem;
-            line-height: 1;
-        }
-        .testi-text {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: var(--black);
-            line-height: 1.7;
-            padding-top: 3rem;
-            margin-bottom: 1.5rem;
-        }
-        .testi-author { display: flex; align-items: center; gap: 1rem; }
-        .testi-avatar {
-            width: 48px; height: 48px;
-            background: var(--blue);
-            border-radius: 50%;
-            border: 2.5px solid var(--black);
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 800; font-size: 1.1rem; color: white;
-        }
-        .testi-name { font-weight: 800; font-size: 0.95rem; }
-        .testi-role { font-size: 0.8rem; color: var(--gray); }
+  .mcta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:10px 14px;gap:10px}
+  .mcta .btn{flex:1;padding:12px}
 
-        /* ─── TRUST ─── */
-        .trust-bar {
-            background: var(--black);
-            border-top: 2px solid var(--black);
-            border-bottom: 2px solid var(--black);
-            padding: 1.75rem 2rem;
-        }
-        .trust-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0;
-            flex-wrap: wrap;
-        }
-        .trust-item {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: white;
-            padding: 0.5rem 2.5rem;
-        }
-        .trust-item svg { stroke: var(--yellow); flex-shrink: 0; }
-        .trust-divider {
-            width: 1px;
-            height: 28px;
-            background: #3A3A3A;
-        }
+  .modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(10,10,20,.5);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:18px}
+  .modal.open{display:flex}
+  .modal-box{background:#fff;border-radius:18px;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;padding:30px;position:relative;box-shadow:var(--sh3)}
+  .modal-box .x{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:9px;border:1.5px solid var(--border2);background:#fff;color:var(--ink);cursor:pointer;font-size:15px}
+  .modal-box .mt{font:900 11.5px var(--ff);letter-spacing:1px;text-transform:uppercase;color:var(--C)}
+  .modal-box h3{font-size:22px;font-weight:900;margin:9px 0 6px;letter-spacing:-.6px}
+  .modal-box .ms{font-size:13.5px;color:var(--ink3);margin-bottom:18px;line-height:1.6;font-weight:500}
+  .modal-box label{font-size:12.5px;font-weight:800;color:var(--ink2);display:block;margin:14px 0 6px}
+  .modal-box input,.modal-box select,.modal-box textarea{width:100%;background:#fff;border:2px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--ink);font-family:var(--ff);font-size:14px;font-weight:600}
+  .modal-box input:focus,.modal-box select:focus,.modal-box textarea:focus{outline:none;border-color:var(--C);box-shadow:0 0 0 3px rgba(0,180,216,.15)}
+  .modal-box .btn{width:100%;margin-top:20px}
+  .modal-ok{display:none;text-align:center;padding:12px 0}
 
-        /* ─── PAYMENT ─── */
-        #payment { background: var(--black); color: white; }
-        #payment .section-label { color: var(--yellow); }
-        #payment .section-title { color: white; }
-        .payment-phases {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 3rem;
-            flex-wrap: wrap;
-        }
-        .phase-card {
-            background: #2A2A2A;
-            border: 2px solid #3A3A3A;
-            border-radius: 16px;
-            padding: 2.5rem;
-            width: 280px;
-            transition: border-color 0.3s;
-        }
-        .phase-card:hover { border-color: var(--blue); }
-        .phase-num {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1rem;
-            color: var(--yellow);
-            letter-spacing: 0.1em;
-            margin-bottom: 0.75rem;
-        }
-        .phase-card h3 { font-weight: 800; font-size: 1.2rem; color: white; margin-bottom: 0.75rem; }
-        .phase-card p { font-size: 0.9rem; color: #9CA3AF; line-height: 1.6; }
-        .phase-connector {
-            width: 60px; height: 3px;
-            background: linear-gradient(90deg, var(--blue), var(--yellow));
-            border-radius: 2px;
-        }
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.vis{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
-        /* ─── FAQ ─── */
-        #faq { background: #FAFBFF; }
-        .faq-list { margin-top: 3rem; max-width: 800px; display: flex; flex-direction: column; gap: 1rem; }
-        .faq-item {
-            background: white;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: border-color 0.2s;
-        }
-        .faq-item.open { border-color: var(--blue); }
-        .faq-q {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 1.5rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            color: var(--black);
-            text-align: left;
-        }
-        .faq-icon {
-            width: 28px; height: 28px;
-            background: var(--yellow);
-            border: 2px solid var(--black);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.1rem;
-            font-weight: 800;
-            flex-shrink: 0;
-            transition: transform 0.3s;
-        }
-        .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--blue); color: white; }
-        .faq-a {
-            display: none;
-            padding: 0 1.5rem 1.25rem;
-            font-size: 0.95rem;
-            color: var(--gray);
-            line-height: 1.7;
-        }
-        .faq-item.open .faq-a { display: block; }
-
-        /* ─── ENROLL ─── */
-        #enroll {
-            background: linear-gradient(135deg, #EBF7FD 0%, #FFF8E0 100%);
-            border-top: 2px solid var(--border);
-        }
-        .enroll-grid {
-            display: grid;
-            grid-template-columns: repeat(3,1fr);
-            gap: 1.5rem;
-            margin-top: 3rem;
-            margin-bottom: 3rem;
-        }
-        .enroll-card {
-            background: white;
-            border: 2.5px solid var(--black);
-            border-radius: 16px;
-            padding: 1.75rem;
-            box-shadow: 4px 4px 0 var(--black);
-        }
-        .enroll-card h4 { font-weight: 800; font-size: 1rem; margin-bottom: 0.5rem; }
-        .enroll-card p { font-size: 0.875rem; color: var(--gray); line-height: 1.6; }
-        .enroll-pricing {
-            text-align: center;
-            padding: 2.5rem;
-            background: white;
-            border: 2.5px solid var(--black);
-            border-radius: 20px;
-            box-shadow: 6px 6px 0 var(--black);
-            max-width: 480px;
-            margin: 0 auto;
-        }
-        .enroll-pricing .big-price {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 5rem;
-            color: var(--black);
-            line-height: 1;
-        }
-        .enroll-pricing .old { font-size: 1.25rem; color: var(--gray); text-decoration: line-through; }
-        .enroll-pricing .note { font-size: 0.85rem; color: var(--gray); margin-top: 0.75rem; }
-
-        /* ─── NEWSLETTER ─── */
-        #newsletter { background: var(--blue); border-top: 2px solid var(--black); border-bottom: 2px solid var(--black); }
-        #newsletter .section-label { color: var(--yellow); }
-        #newsletter .section-title { color: white; }
-        #newsletter .section-desc { color: rgba(255,255,255,0.8); }
-        .newsletter-form {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            max-width: 560px;
-        }
-        .newsletter-form input {
-            flex: 1;
-            padding: 0.875rem 1.25rem;
-            border: 2px solid var(--black);
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            outline: none;
-        }
-        .btn-black {
-            background: var(--black);
-            color: white;
-            font-weight: 800;
-            font-size: 1rem;
-            padding: 0.875rem 1.75rem;
-            border-radius: 10px;
-            border: 2px solid var(--black);
-            cursor: pointer;
-            transition: background 0.2s;
-            white-space: nowrap;
-        }
-        .btn-black:hover { background: #333; }
-        .nl-note { font-size: 0.8rem; color: rgba(255,255,255,0.65); margin-top: 0.75rem; }
-
-        /* ─── CAMPUS ─── */
-        #campus-ambassador {
-            background: white;
-            border-top: 2px solid var(--border);
-            border-bottom: 2px solid var(--border);
-        }
-        .campus-inner {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        /* ─── FOOTER ─── */
-        footer {
-            background: var(--black);
-            color: white;
-            padding: 4rem 2rem 2rem;
-        }
-        .footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .footer-top {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            margin-bottom: 3rem;
-        }
-        .footer-logo img { height: 48px; margin-bottom: 1rem; }
-        .footer-desc { font-size: 0.9rem; color: #9CA3AF; line-height: 1.7; max-width: 360px; }
-        .footer-connect h4 { font-weight: 800; font-size: 1rem; margin-bottom: 1.25rem; }
-        .footer-connect a {
-            display: block;
-            font-size: 0.9rem;
-            color: #9CA3AF;
-            text-decoration: none;
-            margin-bottom: 0.5rem;
-            transition: color 0.2s;
-        }
-        .footer-connect a:hover { color: var(--yellow); }
-        .social-links { display: flex; gap: 1rem; margin-top: 1.25rem; }
-        .social-links a {
-            display: inline-block !important;
-            background: #2A2A2A;
-            border: 2px solid #3A3A3A;
-            border-radius: 8px;
-            padding: 0.4rem 0.875rem;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #9CA3AF !important;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .social-links a:hover { border-color: var(--yellow); color: var(--yellow) !important; }
-        .footer-bottom {
-            border-top: 1px solid #2A2A2A;
-            padding-top: 1.5rem;
-            text-align: center;
-            font-size: 0.85rem;
-            color: #6B7280;
-        }
-
-        /* ─── MODAL ─── */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(26,26,26,0.7);
-            backdrop-filter: blur(6px);
-            z-index: 200;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-        .modal-overlay.open { display: flex; }
-        .modal-box {
-            background: white;
-            border: 2.5px solid var(--black);
-            border-radius: 20px;
-            padding: 2.5rem;
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 8px 8px 0 var(--black);
-            position: relative;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        .modal-close {
-            position: absolute;
-            top: 1rem; right: 1rem;
-            width: 32px; height: 32px;
-            background: var(--gray-light);
-            border: 2px solid var(--border);
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.1rem;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s;
-        }
-        .modal-close:hover { background: var(--yellow); border-color: var(--black); }
-        .modal-tag {
-            font-size: 0.7rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--blue-dark);
-            margin-bottom: 0.5rem;
-        }
-        .modal-title {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 2.25rem;
-            color: var(--black);
-            margin-bottom: 0.5rem;
-        }
-        .modal-sub { font-size: 0.9rem; color: var(--gray); margin-bottom: 1.75rem; }
-        .form-group { margin-bottom: 1rem; }
-        .form-group label {
-            display: block;
-            font-weight: 700;
-            font-size: 0.85rem;
-            margin-bottom: 0.4rem;
-            color: var(--black);
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--border);
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            color: var(--black);
-            outline: none;
-            transition: border-color 0.2s;
-            background: white;
-        }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus { border-color: var(--blue); }
-        .phone-row { display: flex; }
-        .phone-prefix {
-            padding: 0.75rem 1rem;
-            background: var(--gray-light);
-            border: 2px solid var(--border);
-            border-right: none;
-            border-radius: 10px 0 0 10px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: var(--gray);
-        }
-        .phone-row input { border-radius: 0 10px 10px 0; }
-        .btn-submit {
-            width: 100%;
-            padding: 1rem;
-            background: var(--black);
-            color: white;
-            border: 2px solid var(--black);
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 800;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 0.5rem;
-            transition: background 0.2s;
-        }
-        .btn-submit:hover { background: var(--blue-dark); border-color: var(--blue-dark); }
-        .success-box {
-            display: none;
-            text-align: center;
-            padding: 2rem 0;
-        }
-        .success-icon {
-            width: 64px; height: 64px;
-            background: var(--yellow);
-            border: 3px solid var(--black);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem;
-            margin: 0 auto 1rem;
-        }
-        .success-box h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; margin-bottom: 0.5rem; }
-        .success-box p { font-size: 0.9rem; color: var(--gray); }
-
-        /* ─── STICKY MOBILE CTA ─── */
-        .sticky-mobile {
-            display: none;
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background: white;
-            border-top: 2px solid var(--black);
-            padding: 0.75rem 1rem;
-            z-index: 90;
-            gap: 0.75rem;
-        }
-        .sticky-mobile a, .sticky-mobile button {
-            flex: 1;
-            padding: 0.75rem;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 800;
-            font-size: 0.9rem;
-            text-align: center;
-            cursor: pointer;
-            border: 2px solid var(--black);
-            text-decoration: none;
-        }
-        .sticky-call { background: var(--gray-light); color: var(--black); }
-        .sticky-enroll { background: var(--yellow); color: var(--black); }
-
-        /* ─── SCROLL TO TOP ─── */
-        #scroll-top {
-            position: fixed;
-            bottom: 5rem;
-            right: 1.5rem;
-            width: 44px; height: 44px;
-            background: var(--yellow);
-            border: 2.5px solid var(--black);
-            border-radius: 10px;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            box-shadow: 3px 3px 0 var(--black);
-            transition: transform 0.2s;
-            z-index: 80;
-        }
-        #scroll-top:hover { transform: translateY(-2px); }
-        #scroll-top.visible { display: flex; }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 900px) {
-            nav { display: none; }
-            .hamburger { display: block; }
-            .hero-inner { grid-template-columns: 1fr; text-align: center; }
-            .hero-btns { justify-content: center; }
-            .hero-visual { display: none; }
-            .pro-grid { grid-template-columns: 1fr; }
-            .intervention-grid { grid-template-columns: 1fr; }
-            .features-grid { grid-template-columns: 1fr; }
-            .enroll-grid { grid-template-columns: 1fr; }
-            .footer-top { grid-template-columns: 1fr; gap: 2rem; }
-            .course-modules { grid-template-columns: 1fr; }
-            .payment-phases { flex-direction: column; }
-            .phase-connector { width: 3px; height: 40px; }
-            .campus-inner { flex-direction: column; text-align: center; }
-            .sticky-mobile { display: flex; }
-            body { padding-bottom: 80px; }
-            .newsletter-form { flex-direction: column; }
-            .merged-enroll-grid { grid-template-columns: 1fr !important; }
-        }
-    </style>
+  @media (max-width:960px){
+    .sec{padding-top:64px;padding-bottom:64px} .hero{padding:120px 0 56px}
+    .feat{grid-template-columns:repeat(2,1fr)} .quotes{grid-template-columns:1fr}
+    .live-grid{grid-template-columns:1fr} .live-card{position:static}
+    .price-grid{grid-template-columns:1fr;max-width:430px;margin:0 auto}
+    .foot-grid{grid-template-columns:1fr 1fr} .tour{gap:68px}
+  }
+  @media (max-width:760px){
+    /* Mobile: screenshots add weight without value — drop them, keep it tight. */
+    .hero-shot,.row .shot{display:none}
+    .row .copy{margin-bottom:0;max-width:100%}
+    .tour{gap:46px}
+    .hero-head{min-height:calc(100vh - 192px);min-height:calc(100svh - 192px);justify-content:flex-start;padding:22px 0 24px}
+    .hero-head .signals{margin-top:auto}
+  }
+  @media (max-width:620px){
+    nav.desk,.hdr-cta .desk-only{display:none} .hamb{display:grid}
+    .feat{grid-template-columns:1fr} .signals{gap:24px}
+    .mcta{display:flex} body{padding-bottom:70px}
+    .foot-grid{grid-template-columns:1fr} .ctaband{padding:38px 22px}
+    .hdr .logo img{height:44px} .sec{padding-top:52px;padding-bottom:52px}
+    h2.title{font-size:28px}
+    .hero h1{font-size:31px;letter-spacing:-1.1px}
+    .hero .sub{font-size:13.5px;margin:12px auto 16px;line-height:1.45}
+    .hero-btns{margin-bottom:20px} .hero-btns .btn.lg{padding:11px 18px;font-size:14px}
+    .signals{gap:10px;padding-top:14px;flex-wrap:nowrap;width:100%;justify-content:space-between} .signals .s{flex:1} .signals .s b{font-size:18px} .signals .s span{font-size:9.5px;white-space:nowrap}
+  }
+</style>
 </head>
 <body>
 
-<!-- ─── HEADER ─── -->
-<header id="main-header">
-    <div class="header-inner">
-        <div class="logo">
-            <a href="#"><img src="zerodaylearnpro.png" alt="ZeroDay Learn"></a>
-        </div>
-        <nav>
-            <a href="#courses">Programs</a>
-            <a href="#weekend-pass">Corporate Series</a>
-            <a href="#project-rescue">Intervention</a>
-            <a href="#features">Advantage</a>
-            <a href="#testimonials">Outcomes</a>
-            <a href="#enroll" class="nav-apply">Apply Now</a>
-        </nav>
-        <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
-            <span></span><span></span><span></span>
-        </button>
+<header id="hdr">
+  <div class="wrap hdr">
+    <a href="#top" class="logo"><img src="assets/logo-dark.png" alt="ZerodayLearn" width="158" height="42"></a>
+    <nav class="desk">
+      <a href="#product">Product</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#live">Live Training</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="hdr-cta">
+      <a href="https://app.zerodaylearn.com/signin" class="btn ghost desk-only">Log in</a>
+      <a href="https://app.zerodaylearn.com/signup" class="btn primary">Start free</a>
+      <button class="hamb" aria-label="Menu" onclick="toggleMenu()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
+  </div>
 </header>
-
-<!-- Mobile Menu -->
-<div id="mobile-menu">
-    <a href="#courses" onclick="toggleMenu()">Programs</a>
-    <a href="#weekend-pass" onclick="toggleMenu()">Corporate Series</a>
-    <a href="#project-rescue" onclick="toggleMenu()">Intervention</a>
-    <a href="#features" onclick="toggleMenu()">Advantage</a>
-    <a href="#testimonials" onclick="toggleMenu()">Outcomes</a>
-    <a href="#enroll" onclick="toggleMenu(); openModal()" class="mobile-apply">Apply Now</a>
+<div class="mobile-menu" id="mmenu">
+  <a href="#product" onclick="toggleMenu()">Product</a>
+  <a href="#pricing" onclick="toggleMenu()">Pricing</a>
+  <a href="#live" onclick="toggleMenu()">Live Training</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="https://app.zerodaylearn.com/signin" class="btn ghost">Log in</a>
+  <a href="https://app.zerodaylearn.com/signup" class="btn primary">Start free</a>
 </div>
 
-<!-- ─── HERO ─── -->
-<section class="hero">
-    <div class="hero-bg-shape s1"></div>
-    <div class="hero-bg-shape s2"></div>
-    <div class="hero-dots">
-        <div class="dot" style="width:12px;height:12px;background:#F5C518;top:20%;left:10%;animation-delay:0s;border:2px solid #1A1A1A;"></div>
-        <div class="dot" style="width:8px;height:8px;background:#4BB8E8;top:60%;left:5%;animation-delay:2s;border-radius:0;"></div>
-        <div class="dot" style="width:16px;height:16px;background:#4BB8E8;top:15%;right:15%;animation-delay:1s;border:2px solid #1A1A1A;border-radius:4px;"></div>
-        <div class="dot" style="width:10px;height:10px;background:#F5C518;bottom:25%;right:8%;animation-delay:3s;"></div>
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="orb" style="width:460px;height:460px;background:rgba(0,180,216,.28);top:-140px;right:-80px"></div>
+  <div class="orb" style="width:420px;height:420px;background:rgba(0,200,150,.26);bottom:-120px;left:-120px"></div>
+  <div class="orb" style="width:220px;height:220px;background:rgba(245,197,24,.18);top:22%;left:30%"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-head">
+      <span class="eyebrow-pill">Elite Hands-on Security Training</span>
+      <h1>Exploit real lab targets.<br>Then <span class="accent">learn</span> <span class="mark">the fix.</span></h1>
+      <p class="sub">Learn offensive security by doing. Practise on 100+ real-world labs across 13 attack tracks, right from your browser with nothing to install. Every target spins up in its own private environment in seconds, so you go from reading a lesson to breaking a real app in one click. Find real vulnerabilities, learn exactly why they happen, then apply the fix. Built around the OWASP Top&nbsp;10 (2025).</p>
+      <div class="hero-btns">
+        <a href="https://app.zerodaylearn.com/signup" class="btn primary lg">Start free, no card</a>
+        <a href="#product" class="btn ghost lg">Visit the platform</a>
+      </div>
+      <div class="signals">
+        <div class="s"><b>100+</b><span>Hands-on labs</span></div>
+        <div class="s"><b>13</b><span>Attack tracks</span></div>
+        <div class="s"><b>500+</b><span>Students trained</span></div>
+        <div class="s"><b>OWASP</b><span>Top 10 · 2025</span></div>
+      </div>
     </div>
-    <div class="hero-inner">
-        <div class="hero-content">
-            <div class="hero-tag">Elite Cohort 2026</div>
-            <h1 class="hero-title">
-                Build What<br>
-                <span class="blue">The Future</span><br>
-                <span class="yellow-bg">Demands.</span>
-            </h1>
-            <p class="hero-desc">
-                Elite Cyber Security programs designed for ambitious minds ready to dominate the tech industry. Real skills. Real environments. Real careers.
-            </p>
-            <div class="hero-btns">
-                <button class="btn-primary" onclick="openModal()">
-                    Begin Application
-                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                </button>
-                <a href="#courses" class="btn-secondary">
-                    Explore Programs
-                </a>
-            </div>
-        </div>
-        <div class="hero-visual">
-            <div class="hero-card-stack">
-                <div class="stat-card c1" style="animation-delay:0s;">
-                    <div class="stat-num">500+</div>
-                    <div class="stat-label">Students Trained</div>
-                </div>
-                <div class="stat-card main">
-                    <div class="main-icon">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#2A9FD4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-                    </div>
-                    <div class="main-title">Enterprise Cyber Security</div>
-                    <div class="main-sub">8 Weeks • Ethical Hacking</div>
-                    <div class="yellow-badge">₹14,999 Only</div>
-                </div>
-                <div class="stat-card c2" style="animation-delay:2s;">
-                    <div class="stat-num">100%</div>
-                    <div class="stat-label">Hands-On Training</div>
-                </div>
-            </div>
-        </div>
+    <div class="hero-shot reveal">
+      <div class="browser">
+        <div class="top"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i><span class="url">app.zerodaylearn.com/dashboard</span></div>
+        <img src="assets/shot-dashboard.png" alt="The ZerodayLearn dashboard showing the labs catalogue" width="1280" height="800">
+      </div>
     </div>
+  </div>
 </section>
 
-<!-- ─── CORPORATE PRO SERIES ─── -->
-<section id="weekend-pass">
-    <div class="container reveal">
-        <div class="section-label">ZeroDay Corporate Training</div>
-        <h2 class="section-title">The <span class="blue">Corporate</span> Pro Series</h2>
-        <p class="section-desc">Advanced, execution-focused security training for companies and serious practitioners. We train your teams in offensive cyber security, penetration testing, and AI security — at enterprise scale.</p>
-        <div class="pro-grid">
-            <div class="pro-card">
-                <div class="pro-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="12" y1="8" x2="12" y2="16"/></svg>
-                    </div>
-                <h4>Offensive Security Frameworks</h4>
-                <p>Industry-grade methodologies covering network, web, mobile and cloud penetration testing.</p>
-            </div>
-            <div class="pro-card">
-                <div class="pro-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
-                    </div>
-                <h4>Corporate Team Training</h4>
-                <p>Custom security programs built for your company's tech stack, team size, and threat landscape.</p>
-            </div>
-            <div class="pro-card">
-                <div class="pro-icon">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
-                    </div>
-                <h4>Elite Intake Model</h4>
-                <p>Limited seats. High standards. Active, hands-on learning. Performance-driven environment.</p>
-            </div>
-        </div>
-        <div class="pro-cta">
-            <p>Access granted upon review. Available for individuals and corporate teams.</p>
-            <button class="btn-blue" onclick="openModal('ZeroDay Pro Series')">Enquire About Corporate Access →</button>
-        </div>
+<!-- PRODUCT TOUR -->
+<section class="sec wrap" id="product">
+  <div class="sec-head center reveal" style="margin-bottom:58px">
+    <span class="eyebrow">The platform</span>
+    <h2 class="title">A real training environment, <span class="accent">not a course player</span></h2>
+    <p class="lead">Everything runs in the browser against live lab targets. Here's what you actually get.</p>
+  </div>
+  <div class="tour">
+    <div class="row reveal">
+      <div class="copy">
+        <div class="kick">Hands-on labs</div>
+        <h3>100+ isolated labs across 13 attack tracks</h3>
+        <p>SQL injection, XSS, SSRF, access control, API and cloud. Each lab spins up a private, ready-to-hack environment with a clear objective, hints when you're stuck, and a step-by-step fix you can apply to real code.</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> One isolated container per lab, per user</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> 8 labs free, start without a card</li>
+        </ul>
+      </div>
+      <div class="shot"><div class="browser"><div class="top"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i><span class="url">app.zerodaylearn.com/labs/sqli-login-bypass</span></div><img src="assets/shot-lab.png" alt="A ZerodayLearn lab with objective, hints, the fix, and a live lab environment" width="1280" height="800"></div></div>
     </div>
+    <div class="row reveal">
+      <div class="copy">
+        <div class="kick">Missions</div>
+        <h3>Real engagements, start to finish</h3>
+        <p>Two mini missions and one final kill-chain. Each is a single runnable target whose stages chain techniques end to end, just like a real client engagement, from first foothold to full compromise. Finish it yourself and earn a verifiable certificate.</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Multi-stage, self-paced, self-graded</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> A verifiable certificate per mission</li>
+        </ul>
+      </div>
+      <div class="shot"><div class="browser"><div class="top"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i><span class="url">app.zerodaylearn.com/missions</span></div><img src="assets/shot-missions.png" alt="ZerodayLearn Missions, multi-stage real-engagement scenarios" width="1280" height="800"></div></div>
+    </div>
+    <div class="row reveal">
+      <div class="copy">
+        <div class="kick">The Academy</div>
+        <h3>The theory behind every attack</h3>
+        <p>Practitioner-written lessons with diagrams and real commands, mapped to the OWASP Top 10 (2025), the API Security Top 10 and CWE. Read the method, then go practise it in the lab next door.</p>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Lessons linked to the matching labs</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Updated to OWASP Top 10 · 2025</li>
+        </ul>
+      </div>
+      <div class="shot"><div class="browser"><div class="top"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i><span class="url">app.zerodaylearn.com/academy</span></div><img src="assets/shot-academy.png" alt="The ZerodayLearn Academy, lessons and methodology" width="1280" height="800"></div></div>
+    </div>
+  </div>
 </section>
 
-
-<!-- ─── PROJECT INTERVENTION ─── -->
-<section id="project-rescue">
-    <div class="container reveal">
-        <div class="section-label">Technical Intervention</div>
-        <h2 class="section-title">ZeroDay <span class="blue">Project</span> <span class="yellow-bg">Rescue</span></h2>
-        <p class="section-desc">Stuck with a final-year project? Deployment failures? Need architectural correction? Our team fixes it with industry precision.</p>
-        <div class="intervention-grid">
-            <div class="intervention-card">
-                <div class="intervention-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2A9FD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-                    </div>
-                <h4>Security Architecture Review</h4>
-                <p>Code analysis, vulnerability detection, and structural hardening.</p>
-            </div>
-            <div class="intervention-card">
-                <div class="intervention-icon">
-                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2A9FD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
-                </div>
-                <h4>AI Model Debugging</h4>
-                <p>Performance tuning, dataset refinement, and deployment stabilization.</p>
-            </div>
-            <div class="intervention-card">
-                <div class="intervention-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2A9FD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
-                    </div>
-                <h4>Strategic Guidance</h4>
-                <p>Technical direction, documentation improvement, and demo preparation.</p>
-            </div>
-        </div>
-        <div style="text-align:center;margin-top:2.5rem;">
-            <button class="btn-primary" onclick="openModal('Project Intervention')">Request Technical Review →</button>
-        </div>
-    </div>
+<!-- COMPACT FEATURES -->
+<section class="wrap" style="padding-bottom:92px">
+  <div class="feat">
+    <div class="fcard reveal"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div><h4>The Playground</h4><p>A deliberately vulnerable SaaS with 30+ planted flaws and no hints. Hunt it like a real target.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5.5A1.5 1.5 0 015.5 4h8A1.5 1.5 0 0115 5.5V10a1.5 1.5 0 01-1.5 1.5H8l-3 2.5V5.5z"/><path d="M9 13.5A1.5 1.5 0 0010.5 15.5H16l3 2.5V11a1.5 1.5 0 00-1.5-1.5H17"/></svg></div><h4>Interview Prep</h4><p>250 real web-security interview questions with worked answers. First 50 free.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></div><h4>Mock Interviews</h4><p>Book a 1:1 mock interview with a mentor, practise under real conditions and get honest feedback. <b>Pro</b>.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0zM7 6H4a3 3 0 003 3M17 6h3a3 3 0 01-3 3"/></svg></div><h4>Weekly Quiz</h4><p>A timed round every Sunday with a live leaderboard and prizes for the top three. Free for everyone.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 20h5v-1a4 4 0 00-4-4h-1M9 20H2v-1a4 4 0 014-4h2m4-4a4 4 0 10-8 0 4 4 0 008 0zm6 0a3 3 0 10-6 0 3 3 0 006 0z"/></svg></div><h4>Weekly Doubt Session</h4><p>A live group Q&amp;A with a mentor every Sunday. Bring your blockers and get unstuck. <b>Pro</b>.</p></div>
+    <div class="fcard reveal"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="6"/><path d="M9.5 9l1.8 1.8L15 7"/><path d="M8.5 14.5L7 22l5-3 5 3-1.5-7.5"/></svg></div><h4>Verifiable certificates</h4><p>Tamper-evident credentials an employer can verify online.</p></div>
+  </div>
 </section>
 
-<!-- ─── FEATURES ─── -->
-<section id="features">
-    <div class="container reveal">
-        <div class="section-label">The ZeroDay Advantage</div>
-        <h2 class="section-title">Built <span class="yellow-bg">Different.</span></h2>
-        <div class="features-grid">
-            <div class="feature-item">
-                <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                    </div>
-                <div>
-                    <h3>Enterprise-Grade Training</h3>
-                    <p>Our curriculum mirrors real industry attack scenarios. You don't learn tools — you master environments.</p>
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                    </div>
-                <div>
-                    <h3>Discipline & Execution</h3>
-                    <p>Mindset, structured thinking, and execution precision — the traits separating average from elite.</p>
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><circle cx="19" cy="5" r="2"/><path d="M19 5v1M18 3l1 2"/></svg>
-                    </div>
-                <div>
-                    <h3>Real Mentorship</h3>
-                    <p>Direct access to experienced practitioners in real-world security environments — not just instructors.</p>
-                </div>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-                    </div>
-                <div>
-                    <h3>Career Transformation</h3>
-                    <p>Portfolio refinement, interview simulations, and strategic positioning for global tech opportunities.</p>
-                </div>
-            </div>
-        </div>
+<!-- PRICING -->
+<section class="pricing-wrap" id="pricing">
+  <div class="wrap sec">
+    <div class="sec-head center reveal" style="margin-bottom:46px">
+      <span class="eyebrow">Pricing</span>
+      <h2 class="title">Start free. Go Pro. Or train <span class="accent">live with us</span>.</h2>
+      <p class="lead">Free labs forever, an affordable self-serve plan, and a premium mentor-led cohort.</p>
     </div>
+    <div class="price-grid">
+      <div class="plan reveal">
+        <div class="pn">FREE</div>
+        <div class="pp" style="margin-top:16px">₹0</div>
+        <div class="psub">Get hands-on today, no card needed.</div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> 8 hands-on labs</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> 50 interview questions</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Academy preview</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Weekly Quiz</li>
+        </ul>
+        <a href="https://app.zerodaylearn.com/signup" class="btn light">Create free account</a>
+      </div>
+      <div class="plan feat2 reveal">
+        <div class="pn">PRO</div>
+        <div class="pmrp">₹2,499</div>
+        <div class="pp">₹1,299 <small>/ month</small></div>
+        <div class="psub">The whole self-serve platform, unlocked.</div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> All 100+ labs, 13 tracks</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> New labs added every week</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Full Academy + all 250 questions</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> All Missions + the Playground</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> 1:1 mock interview with a mentor</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Weekly Sunday doubt session</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Hints, walkthroughs, fixes, write-ups</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> A verifiable certificate per mission</li>
+        </ul>
+        <a href="https://app.zerodaylearn.com/upgrade" class="btn primary">Go Pro</a>
+      </div>
+      <div class="plan reveal">
+        <div class="pn">LIVE TRAINING</div>
+        <div class="pp" style="margin-top:16px">₹14,999</div>
+        <div class="psub">8-week live cohort with mentorship.</div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Everything in Pro</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Live, practitioner-led sessions</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Proctored exam + recognised certificate</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Interview prep + career guidance</li>
+        </ul>
+        <button class="btn yellow" onclick="openModal('Live Training, Enterprise Cyber Security')">Apply for the cohort</button>
+      </div>
+    </div>
+    <p style="text-align:center;color:var(--ink4);font-size:13px;margin-top:20px">Prices in INR · Pro billed per 30-day window · cancel anytime · no refunds · coupons available on request.</p>
+  </div>
 </section>
 
-<!-- ─── TESTIMONIALS ─── -->
-<section id="testimonials">
-    <div class="container reveal">
-        <div class="section-label">Success Stories</div>
-        <h2 class="section-title">Built for the <span class="blue">Relentless.</span></h2>
-        <div class="testimonials-stack">
-            <div class="testi-card">
-                <div class="testi-text">"ZeroDay Learn completely changed my trajectory. I went from understanding basic security concepts to executing full-scale penetration testing in real environments."</div>
-                <div class="testi-author">
-                    <div class="testi-avatar">A</div>
-                    <div>
-                        <div class="testi-name">Arjun K.</div>
-                        <div class="testi-role">Security Analyst • Product-Based Company</div>
-                    </div>
-                </div>
-            </div>
-            <div class="testi-card" style="align-self:flex-end;">
-                <div class="testi-text">"The program wasn't just theory. We built real models, tested vulnerabilities, and understood how enterprise systems think."</div>
-                <div class="testi-author">
-                    <div class="testi-avatar" style="background:var(--yellow);color:var(--black);">D</div>
-                    <div>
-                        <div class="testi-name">Divya R.</div>
-                        <div class="testi-role">Security Engineer • FinTech Startup</div>
-                    </div>
-                </div>
-            </div>
-            <div class="testi-card">
-                <div class="testi-text">"ZeroDay isn't a course. It's a transformation. The discipline, mindset, and exposure gave me the confidence to compete globally."</div>
-                <div class="testi-author">
-                    <div class="testi-avatar" style="background:var(--black);">N</div>
-                    <div>
-                        <div class="testi-name">Naveen S.</div>
-                        <div class="testi-role">Red Team Associate • MNC</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- LIVE TRAINING -->
+<section class="sec wrap" id="live">
+  <div class="sec-head reveal" style="margin-bottom:44px">
+    <span class="eyebrow">Flagship · 8 weeks</span>
+    <h2 class="title">Enterprise Cyber Security, <span class="accent">live cohort</span></h2>
+    <p class="lead">Offensive Security Engineering, mentor-led. Think like an attacker, defend like a professional. For individuals and corporate teams.</p>
+  </div>
+  <div class="live-grid">
+    <div class="reveal">
+      <div class="stages">
+        <div class="stage"><span class="no">01</span><div><h4>Advanced Reconnaissance</h4><p>Weaponising OSINT and mapping high-value infrastructure.</p></div></div>
+        <div class="stage"><span class="no">02</span><div><h4>Service Enumeration</h4><p>Packet-level fingerprinting; bypassing WAF/IPS to reveal the attack surface.</p></div></div>
+        <div class="stage"><span class="no">03</span><div><h4>Weaponization &amp; Delivery</h4><p>Custom payloads, SQLi to RCE, delivered with precision.</p></div></div>
+        <div class="stage"><span class="no">04</span><div><h4>Lateral Movement</h4><p>Internal pivoting and privilege escalation in Active Directory.</p></div></div>
+        <div class="stage"><span class="no">05</span><div><h4>Full-Spectrum Reporting</h4><p>Turn findings into business-aligned remediation plans.</p></div></div>
+      </div>
+      <div class="tools"><span>Nmap</span><span>Wireshark</span><span>Nessus</span><span>Burp Suite</span><span>Metasploit</span><span>SQLmap</span><span>OWASP ZAP</span><span>Shodan</span><span>JADX</span><span>MobSF</span><span>Prowler</span></div>
     </div>
+    <div class="live-card reveal">
+      <div class="lt">Live Cohort 2026</div>
+      <div class="lp">₹14,999 <small>all-inclusive</small></div>
+      <div class="lmeta">8 weeks · online · weekday &amp; weekend batches</div>
+      <ul>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Live, interactive, practitioner-led sessions</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Full access to the self-serve platform</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Proctored exam &amp; recognised certificate</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Interview simulations &amp; portfolio review</li>
+        <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M20 6 9 17l-5-5"/></svg> Structured two-phase tuition plan</li>
+      </ul>
+      <button class="btn yellow" style="width:100%" onclick="openModal('Live Training, Enterprise Cyber Security')">Begin application</button>
+      <p style="font-size:12.5px;color:#9298ab;margin-top:12px;text-align:center">Admissions reviewed carefully · limited seats.</p>
+    </div>
+  </div>
 </section>
 
-<!-- ─── TRUST BAR ─── -->
-<div class="trust-bar">
-    <div class="trust-inner">
-        <div class="trust-item">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-            <span>ISO Recognized</span>
-        </div>
-        <div class="trust-divider"></div>
-        <div class="trust-item">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- ribbon top -->
-                <path d="M9 2L7 7H5L8 10L7 14L9 12.5L11 14L10 10L12 7.5L14 10L13 14L15 12.5L17 14L16 10L19 7H17L15 2H9Z" fill="#F5C518" stroke="#1A1A1A" stroke-width="0.8" stroke-linejoin="round"/>
-                <!-- circle badge -->
-                <circle cx="12" cy="16" r="5" fill="#F5C518" stroke="#1A1A1A" stroke-width="1.5"/>
-                <circle cx="12" cy="16" r="3" fill="none" stroke="#1A1A1A" stroke-width="1"/>
-                <!-- checkmark -->
-                <polyline points="10.5 16 11.5 17 13.5 15" stroke="#1A1A1A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span>MSME Registered</span>
-        </div>
-        <div class="trust-divider"></div>
-        <div class="trust-item">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M19 8h2M21 12h-2M3 8h2M3 12h2"/></svg>
-            <span>Industry Practitioners</span>
-        </div>
-        <div class="trust-divider"></div>
-        <div class="trust-item">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-            <span>500+ Students</span>
-        </div>
-    </div>
-</div>
-
-<!-- ─── PAYMENT ─── -->
-<section id="payment">
-    <div class="container reveal" style="text-align:center;">
-        <div class="section-label">Tuition Structure</div>
-        <h2 class="section-title">Structured <span style="color:var(--yellow)">Payment Plan</span></h2>
-        <p class="section-desc" style="margin:0 auto 0;color:#9CA3AF;">A disciplined two-phase tuition model aligned with commitment and performance.</p>
-        <div class="payment-phases">
-            <div class="phase-card">
-                <div class="phase-num">Phase One</div>
-                <h3>Admission Commitment</h3>
-                <p>Initial tuition portion is secured at the time of enrollment.</p>
-            </div>
-            <div class="phase-connector"></div>
-            <div class="phase-card">
-                <div class="phase-num">Phase Two</div>
-                <h3>Completion Settlement</h3>
-                <p>Remaining tuition is payable upon program completion.</p>
-            </div>
-        </div>
-        <p style="color:#6B7280;font-size:0.85rem;margin-top:2rem;">Available for selected programs only.</p>
-    </div>
+<!-- TESTIMONIALS -->
+<section class="sec wrap" style="padding-top:0">
+  <div class="sec-head center reveal" style="margin-bottom:42px">
+    <span class="eyebrow">Success stories</span>
+    <h2 class="title">Built for the <span class="accent">relentless</span></h2>
+  </div>
+  <div class="quotes">
+    <div class="quote reveal"><div class="stars">★★★★★</div><p>"ZerodayLearn changed my trajectory. I went from basic security concepts to executing full-scale penetration testing in real environments."</p><div class="who"><span class="av">A</span><div><b>Arjun K.</b><span>Security Analyst · Product Company</span></div></div></div>
+    <div class="quote reveal"><div class="stars">★★★★★</div><p>"It wasn't just theory. We built real attacks, tested vulnerabilities, and understood how enterprise systems actually think."</p><div class="who"><span class="av">D</span><div><b>Divya R.</b><span>Security Engineer · FinTech</span></div></div></div>
+    <div class="quote reveal"><div class="stars">★★★★★</div><p>"Not a course, a transformation. The discipline, mindset and exposure gave me the confidence to compete globally."</p><div class="who"><span class="av">N</span><div><b>Naveen S.</b><span>Red Team Associate · MNC</span></div></div></div>
+  </div>
 </section>
 
-<!-- ─── FAQ ─── -->
-<section id="faq">
-    <div class="container reveal">
-        <div class="section-label">Clarity</div>
-        <h2 class="section-title">Frequently Asked <span class="yellow-bg">Questions</span></h2>
-        <div class="faq-list">
-            <div class="faq-item">
-                <button class="faq-q" onclick="toggleFAQ(this)">
-                    What background is required to join?
-                    <div class="faq-icon">+</div>
-                </button>
-                <div class="faq-a">No prior experience is mandatory. A disciplined mindset and willingness to learn are sufficient.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-q" onclick="toggleFAQ(this)">
-                    Do you provide career guidance?
-                    <div class="faq-icon">+</div>
-                </button>
-                <div class="faq-a">Yes. We provide structured interview preparation, portfolio refinement, and strategic mentorship.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-q" onclick="toggleFAQ(this)">
-                    Is this suitable for working professionals?
-                    <div class="faq-icon">+</div>
-                </button>
-                <div class="faq-a">Absolutely. Sessions are structured to accommodate both students and working professionals.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-q" onclick="toggleFAQ(this)">
-                    What certificate will I receive after completion?
-                    <div class="faq-icon">+</div>
-                </button>
-                <div class="faq-a">Upon successful completion of the program and the proctored online exam, you will receive a ZeroDay Learn Certificate of Completion in Enterprise Cyber Security — recognized by industry practitioners.</div>
-            </div>
-            <div class="faq-item">
-                <button class="faq-q" onclick="toggleFAQ(this)">
-                    What is the batch schedule and mode of training?
-                    <div class="faq-icon">+</div>
-                </button>
-                <div class="faq-a">Training is conducted online in live interactive sessions. Batches run on both weekdays and weekends to suit your availability. Exact timings are shared upon enrollment confirmation.</div>
-            </div>
-        </div>
-    </div>
+<!-- FAQ -->
+<section class="sec wrap" id="faq" style="padding-top:0">
+  <div class="sec-head center reveal" style="margin-bottom:38px">
+    <span class="eyebrow">Clarity</span>
+    <h2 class="title">Frequently asked <span class="accent">questions</span></h2>
+  </div>
+  <div class="faq">
+    <div class="faq-item reveal"><button class="faq-q" onclick="toggleFAQ(this)">What background is required to join?<span class="pm">+</span></button><div class="faq-a"><div>No prior experience is mandatory. A disciplined mindset and willingness to learn are enough, the free labs are a great place to begin today.</div></div></div>
+    <div class="faq-item reveal"><button class="faq-q" onclick="toggleFAQ(this)">What's the difference between Pro and Live Training?<span class="pm">+</span></button><div class="faq-a"><div>Pro is the self-serve platform, all the labs, Academy, Missions and the Playground, practised on your own schedule, anytime. Live Training is instructor-led: live interactive sessions, direct mentorship, a proctored exam with a recognised certificate, and career guidance. Live Training also includes full access to the platform.</div></div></div>
+    <div class="faq-item reveal"><button class="faq-q" onclick="toggleFAQ(this)">Is this suitable for working professionals?<span class="pm">+</span></button><div class="faq-a"><div>Absolutely. The platform is available 24/7, and Live Training runs weekday and weekend batches to suit students and working professionals alike.</div></div></div>
+    <div class="faq-item reveal"><button class="faq-q" onclick="toggleFAQ(this)">What certificate will I receive?<span class="pm">+</span></button><div class="faq-a"><div>On completing the program and the proctored online exam you receive a ZerodayLearn Certificate of Completion in Enterprise Cyber Security, recognised by industry practitioners. Platform certificates are also publicly verifiable online.</div></div></div>
+    <div class="faq-item reveal"><button class="faq-q" onclick="toggleFAQ(this)">Are the labs safe and legal to use?<span class="pm">+</span></button><div class="faq-a"><div>Yes. Every lab is a deliberately vulnerable target that runs in its own private, locked-down environment with no internet access. You only ever attack the targets we provide, nothing real.</div></div></div>
+  </div>
 </section>
 
-<!-- ─── ENROLL ─── -->
-<section id="enroll" style="background: linear-gradient(135deg, #FAFBFF 0%, #EBF7FD 60%, #FFF8E0 100%); border-top: 2px solid var(--border); padding: 5rem 2rem;">
-    <div class="container reveal">
-
-        <!-- Header -->
-        <div style="text-align:center; margin-bottom: 3rem;">
-            <div class="section-label">Admissions Open • Founding Cohort 2026</div>
-            <h2 class="section-title">Apply for <span class="blue">Enterprise</span> <span class="yellow-bg">Cyber Security</span></h2>
-            <p class="section-desc" style="margin: 0.75rem auto 0;">Building a community of disciplined, high-performance learners. Admissions are reviewed carefully.</p>
-        </div>
-
-        <!-- Merged two-column layout — equal height via CSS grid rows -->
-        <div class="merged-enroll-grid" style="display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto auto 1fr; gap: 1.25rem; max-width: 1000px; margin: 0 auto;">
-
-            <!-- LEFT: Course card spanning all rows -->
-            <div class="course-card" style="margin:0; grid-row: 1 / 5; display:flex; flex-direction:column; justify-content:space-between;">
-                <div>
-                    <div class="course-badge">
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                        Flagship Program • 8 Weeks
-                    </div>
-                    <div class="course-title">Enterprise Cyber Security</div>
-                    <div class="course-sub">Offensive Security Engineering — Think Like an Attacker. Defend Like a Professional.</div>
-
-                    <!-- 5 Stages -->
-                    <div style="margin-top:1.5rem;">
-                        <p style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gray);margin-bottom:0.875rem;">The 5 Stages of Exploitation</p>
-                        <div style="display:flex;flex-direction:column;gap:0.6rem;">
-                            <div style="display:flex;align-items:flex-start;gap:0.75rem;">
-                                <span style="background:var(--black);color:var(--yellow);font-family:'Bebas Neue',sans-serif;font-size:0.85rem;padding:0.15rem 0.5rem;border-radius:4px;flex-shrink:0;">01</span>
-                                <div><strong style="font-size:0.875rem;">Advanced Reconnaissance</strong><p style="font-size:0.8rem;color:var(--gray);margin-top:0.1rem;">Weaponizing OSINT and infrastructure mapping of high-value targets.</p></div>
-                            </div>
-                            <div style="display:flex;align-items:flex-start;gap:0.75rem;">
-                                <span style="background:var(--black);color:var(--yellow);font-family:'Bebas Neue',sans-serif;font-size:0.85rem;padding:0.15rem 0.5rem;border-radius:4px;flex-shrink:0;">02</span>
-                                <div><strong style="font-size:0.875rem;">Service Enumeration</strong><p style="font-size:0.8rem;color:var(--gray);margin-top:0.1rem;">Packet-level fingerprinting. Bypassing WAF/IPS to reveal the attack surface.</p></div>
-                            </div>
-                            <div style="display:flex;align-items:flex-start;gap:0.75rem;">
-                                <span style="background:var(--black);color:var(--yellow);font-family:'Bebas Neue',sans-serif;font-size:0.85rem;padding:0.15rem 0.5rem;border-radius:4px;flex-shrink:0;">03</span>
-                                <div><strong style="font-size:0.875rem;">Weaponization & Delivery</strong><p style="font-size:0.8rem;color:var(--gray);margin-top:0.1rem;">Crafting custom payloads — SQLi to RCE — delivered with surgical precision.</p></div>
-                            </div>
-                            <div style="display:flex;align-items:flex-start;gap:0.75rem;">
-                                <span style="background:var(--black);color:var(--yellow);font-family:'Bebas Neue',sans-serif;font-size:0.85rem;padding:0.15rem 0.5rem;border-radius:4px;flex-shrink:0;">04</span>
-                                <div><strong style="font-size:0.875rem;">Lateral Movement</strong><p style="font-size:0.8rem;color:var(--gray);margin-top:0.1rem;">Internal network pivoting. Privilege escalation in Active Directory.</p></div>
-                            </div>
-                            <div style="display:flex;align-items:flex-start;gap:0.75rem;">
-                                <span style="background:var(--black);color:var(--yellow);font-family:'Bebas Neue',sans-serif;font-size:0.85rem;padding:0.15rem 0.5rem;border-radius:4px;flex-shrink:0;">05</span>
-                                <div><strong style="font-size:0.875rem;">Full-Spectrum Reporting</strong><p style="font-size:0.8rem;color:var(--gray);margin-top:0.1rem;">Translate critical findings into business-aligned remediation plans.</p></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tools -->
-                    <div style="margin-top:1.5rem;">
-                        <p style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gray);margin-bottom:0.75rem;">Tools & Platforms</p>
-                        <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
-                            <span style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;padding:0.25rem 0.6rem;color:var(--black);">Nmap</span>
-                            <span style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;padding:0.25rem 0.6rem;color:var(--black);">Wireshark</span>
-                            <span style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;padding:0.25rem 0.6rem;color:var(--black);">Nessus</span>
-                            <span style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;padding:0.25rem 0.6rem;color:var(--black);">Burp Suite</span>
-                            <span style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;padding:0.25rem 0.6rem;color:var(--black);">Metasploit</span>
-                            <span style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;padding:0.25rem 0.6rem;color:var(--black);">SQLmap</span>
-                            <span style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;padding:0.25rem 0.6rem;color:var(--black);">OWASP ZAP</span>
-                            <span style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;padding:0.25rem 0.6rem;color:var(--black);">Shodan</span>
-                            <span style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;padding:0.25rem 0.6rem;color:var(--black);">JADX</span>
-                            <span style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;padding:0.25rem 0.6rem;color:var(--black);">MobSF</span>
-                            <span style="background:var(--gray-light);border:1.5px solid var(--border);border-radius:6px;font-size:0.75rem;font-weight:700;padding:0.25rem 0.6rem;color:var(--black);">Prowler</span>
-                        </div>
-                    </div>
-
-                    <!-- 4 Phases Roadmap -->
-                    <div style="margin-top:1.75rem;">
-                        <p style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gray);margin-bottom:0.875rem;">Program Roadmap</p>
-                        <div style="display:flex;flex-direction:column;gap:0;">
-
-                            <!-- Phase 01 -->
-                            <div style="display:flex;gap:0.875rem;align-items:stretch;">
-                                <div style="display:flex;flex-direction:column;align-items:center;">
-                                    <div style="width:32px;height:32px;background:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                        <span style="font-family:'Bebas Neue',sans-serif;font-size:0.85rem;color:var(--yellow);">1</span>
-                                    </div>
-                                    <div style="width:2px;flex:1;background:var(--border);margin:4px 0;"></div>
-                                </div>
-                                <div style="padding-bottom:1.25rem;">
-                                    <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-                                        <strong style="font-size:0.875rem;color:var(--black);">Foundations</strong>
-                                        <span style="font-size:0.7rem;font-weight:700;color:var(--gray);background:var(--gray-light);padding:0.15rem 0.5rem;border-radius:4px;">Days 01–07</span>
-                                    </div>
-                                    <p style="font-size:0.8rem;color:var(--gray);margin-top:0.2rem;">Linux & Windows fundamentals • OS architecture • CLI Usage • Packet Tracer</p>
-                                    <div style="margin-top:0.4rem;display:inline-flex;align-items:center;gap:0.35rem;background:#FFF8E0;border:1.5px solid var(--yellow);border-radius:6px;padding:0.2rem 0.6rem;">
-                                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#D4A914" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                                        <span style="font-size:0.7rem;font-weight:800;color:#D4A914;">Minor Project: Linux Assessment & Network Assessment</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Phase 02 -->
-                            <div style="display:flex;gap:0.875rem;align-items:stretch;">
-                                <div style="display:flex;flex-direction:column;align-items:center;">
-                                    <div style="width:32px;height:32px;background:var(--blue-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                        <span style="font-family:'Bebas Neue',sans-serif;font-size:0.85rem;color:white;">2</span>
-                                    </div>
-                                    <div style="width:2px;flex:1;background:var(--border);margin:4px 0;"></div>
-                                </div>
-                                <div style="padding-bottom:1.25rem;">
-                                    <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-                                        <strong style="font-size:0.875rem;color:var(--black);">Enterprise Network Security</strong>
-                                        <span style="font-size:0.7rem;font-weight:700;color:var(--gray);background:var(--gray-light);padding:0.15rem 0.5rem;border-radius:4px;">Days 08–21</span>
-                                    </div>
-                                    <p style="font-size:0.8rem;color:var(--gray);margin-top:0.2rem;">Enumeration • Vulnerability assessment • Nessus • Exploitation techniques</p>
-                                </div>
-                            </div>
-
-                            <!-- Phase 03 -->
-                            <div style="display:flex;gap:0.875rem;align-items:stretch;">
-                                <div style="display:flex;flex-direction:column;align-items:center;">
-                                    <div style="width:32px;height:32px;background:var(--blue-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                        <span style="font-family:'Bebas Neue',sans-serif;font-size:0.85rem;color:white;">3</span>
-                                    </div>
-                                    <div style="width:2px;flex:1;background:var(--border);margin:4px 0;"></div>
-                                </div>
-                                <div style="padding-bottom:1.25rem;">
-                                    <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-                                        <strong style="font-size:0.875rem;color:var(--black);">Web Application Security</strong>
-                                        <span style="font-size:0.7rem;font-weight:700;color:var(--gray);background:var(--gray-light);padding:0.15rem 0.5rem;border-radius:4px;">Days 22–35</span>
-                                    </div>
-                                    <p style="font-size:0.8rem;color:var(--gray);margin-top:0.2rem;">Core Web Fundamentals • Reconnaissance • OWASP Top 10 • Burp Suite</p>
-                                </div>
-                            </div>
-
-                            <!-- Phase 04 -->
-                            <div style="display:flex;gap:0.875rem;align-items:stretch;">
-                                <div style="display:flex;flex-direction:column;align-items:center;">
-                                    <div style="width:32px;height:32px;background:var(--blue-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                        <span style="font-family:'Bebas Neue',sans-serif;font-size:0.85rem;color:white;">4</span>
-                                    </div>
-                                    <div style="width:2px;flex:1;background:var(--border);margin:4px 0;"></div>
-                                </div>
-                                <div style="padding-bottom:1.25rem;">
-                                    <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-                                        <strong style="font-size:0.875rem;color:var(--black);">Mobile & Cloud Architecture</strong>
-                                        <span style="font-size:0.7rem;font-weight:700;color:var(--gray);background:var(--gray-light);padding:0.15rem 0.5rem;border-radius:4px;">Days 36–48</span>
-                                    </div>
-                                    <p style="font-size:0.8rem;color:var(--gray);margin-top:0.2rem;">Mobile Applications Architecture • JADX • Cloud Vendors Audit • Benchmarks</p>
-                                </div>
-                            </div>
-
-                            <!-- Capstone -->
-                            <div style="display:flex;gap:0.875rem;align-items:flex-start;">
-                                <div style="width:32px;height:32px;background:var(--yellow);border:2px solid var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                </div>
-                                <div>
-                                    <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;">
-                                        <strong style="font-size:0.875rem;color:var(--black);">Major Capstone</strong>
-                                        <span style="font-size:0.7rem;font-weight:700;color:var(--gray);background:var(--gray-light);padding:0.15rem 0.5rem;border-radius:4px;">Days 49–56</span>
-                                    </div>
-                                    <p style="font-size:0.8rem;color:var(--gray);margin-top:0.2rem;">End-to-end Enterprise Pentest Simulation — applying network, web & mobile testing.</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Duration footer -->
-                <div style="margin-top:2rem; padding-top:1.25rem; border-top: 2px solid var(--border); display:flex; gap:1.5rem; flex-wrap:wrap;">
-                    <div>
-                        <p style="font-size:0.7rem;font-weight:800;color:var(--gray);text-transform:uppercase;letter-spacing:0.08em;">Duration</p>
-                        <p style="font-weight:700;color:var(--black);margin-top:0.2rem;font-size:0.9rem;">8 Weeks Intensive</p>
-                    </div>
-                    <div>
-                        <p style="font-size:0.7rem;font-weight:800;color:var(--gray);text-transform:uppercase;letter-spacing:0.08em;">Capstone</p>
-                        <p style="font-weight:700;color:var(--black);margin-top:0.2rem;font-size:0.9rem;">Enterprise Pentest Simulation</p>
-                    </div>
-                    <div>
-                        <p style="font-size:0.7rem;font-weight:800;color:var(--gray);text-transform:uppercase;letter-spacing:0.08em;">Projects</p>
-                        <p style="font-weight:700;color:var(--black);margin-top:0.2rem;font-size:0.9rem;">Minor + Major Capstone</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- RIGHT ROW 1: High Intensity Training -->
-            <div class="enroll-card" style="margin:0;">
-                <h4 style="display:flex;align-items:center;gap:0.5rem;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2A9FD4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                    High Intensity Training
-                </h4>
-                <p>Execution-driven sessions providing Enterprise Security expertise and industry-grade knowledge.</p>
-            </div>
-
-            <!-- RIGHT ROW 2: Mentorship -->
-            <div class="enroll-card" style="margin:0;">
-                <h4 style="display:flex;align-items:center;gap:0.5rem;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2A9FD4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
-                    Structured Mentorship
-                </h4>
-                <p>Direct guidance with practical roadmaps, performance tracking, and continuous technical feedback.</p>
-            </div>
-
-            <!-- RIGHT ROW 3: Career -->
-            <div class="enroll-card" style="margin:0;">
-                <h4 style="display:flex;align-items:center;gap:0.5rem;">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2A9FD4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-                    Career Acceleration
-                </h4>
-                <p>Portfolio development, real-world project exposure, proctored exam, and 1:1 mock interviews.</p>
-            </div>
-
-            <!-- RIGHT ROW 4: Pricing — fills remaining height -->
-            <div style="background: var(--black); border: 2.5px solid var(--black); border-radius: 16px; padding: 2rem; text-align: center; box-shadow: 5px 5px 0 var(--yellow); display:flex; flex-direction:column; justify-content:center; gap: 0.5rem;">
-                <p style="font-size: 0.7rem; font-weight: 800; color: #9CA3AF; text-transform: uppercase; letter-spacing: 0.15em;">Elite Cohort Tuition</p>
-                <div style="font-family: 'Bebas Neue', sans-serif; font-size: 4.5rem; color: white; line-height: 1;">₹14,999</div>
-                <div style="display:flex; align-items:center; justify-content:center; gap: 0.5rem; flex-wrap:wrap;">
-                    <span style="color: #6B7280; text-decoration: line-through; font-size: 1.1rem;">₹24,999</span>
-                    <span style="background: var(--yellow); border: 2px solid var(--black); border-radius: 100px; font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.75rem; color: var(--black);">SAVE 40%</span>
-                </div>
-                <p style="font-size: 0.8rem; color: #6B7280;">Student discounts & payment plans available.</p>
-                <button onclick="openModal('Cyber Security')"
-                    style="margin-top: 0.75rem; width:100%; padding: 1rem; background: var(--yellow); color: var(--black); border: 2.5px solid var(--black); border-radius: 10px; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.2s; box-shadow: 3px 3px 0 rgba(255,255,255,0.2);"
-                    onmouseover="this.style.background='#D4A914';this.style.transform='translateY(-1px)'"
-                    onmouseout="this.style.background='var(--yellow)';this.style.transform='translateY(0)'">
-                    Submit Application →
-                </button>
-            </div>
-
-        </div>
+<!-- CTA -->
+<section class="sec wrap" style="padding-top:0">
+  <div class="ctaband reveal">
+    <h2>Your first lab is waiting.</h2>
+    <p>Create a free account and exploit your first real vulnerability in the next five minutes.</p>
+    <div class="btns">
+      <a href="https://app.zerodaylearn.com/signup" class="btn yellow lg">Start free</a>
+      <button class="btn ghost lg" onclick="openModal('Live Training, Enterprise Cyber Security')">Talk to us about Live Training</button>
     </div>
+  </div>
 </section>
 
-<!-- ─── NEWSLETTER ─── -->
-<section id="newsletter">
-    <div class="container reveal">
-        <div class="section-label">ZeroDay Insights</div>
-        <h2 class="section-title" style="color:white;">Stay <span style="color:var(--yellow)">Ahead.</span></h2>
-        <p class="section-desc">Periodic insights on Cyber Security, red team methodologies, and real-world technical breakdowns. Straight to your inbox.</p>
-        <form class="newsletter-form" onsubmit="handleNewsletter(event)">
-            <input type="email" placeholder="Enter your email address" required>
-            <button type="submit" class="btn-black">Subscribe</button>
-        </form>
-        <p class="nl-note">No spam. Unsubscribe anytime.</p>
-    </div>
-</section>
-
-<!-- ─── CAMPUS ─── -->
-<section id="campus-ambassador">
-    <div class="container reveal">
-        <div class="campus-inner">
-            <div>
-                <div class="section-label">Campus Leadership Program</div>
-                <h3 style="font-family:'Bebas Neue',sans-serif;font-size:2.25rem;color:var(--black);line-height:1.1;margin-bottom:0.75rem;">
-                    Represent <span style="color:var(--blue-dark);">ZeroDay</span> in Your Institution.
-                </h3>
-                <p style="color:var(--gray);font-size:1rem;">Lead technical communities. Organize security discussions. Build influence.</p>
-            </div>
-            <button class="btn-primary" onclick="openModal('Campus Leadership Program')">Apply as Campus Leader →</button>
-        </div>
-    </div>
-</section>
-
-<!-- ─── FOOTER ─── -->
+<!-- FOOTER -->
 <footer>
-    <div class="footer-inner">
-        <div class="footer-top">
-            <div>
-                <div class="footer-logo">
-                    <img src="zerodaylearnpro.png" alt="ZeroDay Learn">
-                </div>
-                <p class="footer-desc">An elite technology institution focused on Cyber Security. Built for ambitious minds ready to compete globally.</p>
-            </div>
-            <div class="footer-connect" style="text-align:right;">
-                <h4>Connect</h4>
-                <a href="mailto:academy@zerodaylearn.com">Send Email</a>
-                <a href="tel:+919514164308">+91 9514164308</a>
-                <div class="social-links" style="justify-content:flex-end;">
-                    <a href="https://www.instagram.com/zerodaylearn">Instagram</a>
-                    <a href="https://www.linkedin.com/company/zerodaylearn">LinkedIn</a>
-                    <a href="#">Twitter</a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            © 2026 ZeroDay Learn. Building disciplined technology leaders.
-        </div>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo"><img src="assets/logo.png" alt="ZerodayLearn" width="135" height="36"></div>
+        <p class="fd">Hands-on offensive security training. Exploit real targets safely, then learn the fix. Built by practitioners.</p>
+      </div>
+      <div><h5>Platform</h5><ul>
+        <li><a href="https://app.zerodaylearn.com/signup">Start free</a></li>
+        <li><a href="https://app.zerodaylearn.com/signin">Log in</a></li>
+        <li><a href="#product">Product</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+      </ul></div>
+      <div><h5>Programs</h5><ul>
+        <li><a href="#live">Live Training</a></li>
+        <li><a href="#live">Corporate teams</a></li>
+        <li><a href="https://app.zerodaylearn.com/verify">Verify a certificate</a></li>
+      </ul></div>
+      <div><h5>Contact</h5><ul>
+        <li><a href="mailto:support@zerodaylearn.com">support@zerodaylearn.com</a></li>
+      </ul></div>
     </div>
+    <div class="foot-bottom">
+      <span>© <span id="yr"></span> ZerodayLearn · MSME Registered</span>
+      <span><a href="https://app.zerodaylearn.com/terms">Terms</a> · <a href="https://app.zerodaylearn.com/privacy">Privacy</a> · <a href="https://app.zerodaylearn.com/refunds">Refunds</a></span>
+    </div>
+  </div>
 </footer>
 
-<!-- ─── SCROLL TOP ─── -->
-<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
-
-<!-- ─── STICKY MOBILE ─── -->
-<div class="sticky-mobile">
-    <a href="tel:+919514164308" class="sticky-call">📞 Call Us</a>
-    <button class="sticky-enroll" onclick="openModal()">Enroll Now</button>
+<div class="mcta">
+  <a href="tel:+919514164308" class="btn ghost">Call us</a>
+  <button class="btn yellow" onclick="openModal('Live Training — Enterprise Cyber Security')">Enroll Now</button>
 </div>
 
-<!-- ─── ENROLLMENT MODAL ─── -->
-<div class="modal-overlay" id="enrollment-modal">
-    <div class="modal-box">
-        <button class="modal-close" onclick="closeModal()">✕</button>
-        <div class="modal-tag">ZeroDay Learn</div>
-        <div class="modal-title">Begin Your Application</div>
-        <p class="modal-sub">Submit your details to proceed with the admission process.</p>
-
-        <form id="enrollment-form" action="https://formspree.io/f/xnjbkdov" method="POST">
-            <div class="form-group">
-                <label>Full Name</label>
-                <input type="text" name="name" placeholder="Your full name" required>
-            </div>
-            <div class="form-group">
-                <label>Phone Number</label>
-                <div class="phone-row">
-                    <div class="phone-prefix">+91</div>
-                    <input type="tel" name="phone" placeholder="XXXXXXXXXX" pattern="[0-9]{10}" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" name="email" placeholder="you@email.com" required>
-            </div>
-            <div class="form-group">
-                <label>Select Program</label>
-                <select name="course" required>
-                    <option value="" disabled selected>Choose a program</option>
-                    <option value="Cyber Security">Cyber Security</option>
-                    <option value="ZeroDay Pro Series">Corporate Pro Series</option>
-                    <option value="Project Intervention">Project Intervention</option>
-                    <option value="Campus Ambassador">Campus Ambassador</option>
-                </select>
-            </div>
-            <button type="submit" class="btn-submit">Submit Application →</button>
-        </form>
-
-        <div class="success-box" id="enrollment-success">
-            <div class="success-icon">✓</div>
-            <h3>Application Received!</h3>
-            <p>Our team will contact you shortly via phone.</p>
-        </div>
+<!-- APPLY MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="x" onclick="closeModal()" aria-label="Close">✕</button>
+    <div class="mt">ZerodayLearn · Admissions</div>
+    <h3>Begin your application</h3>
+    <p class="ms">We build a community of disciplined learners and review applications carefully. We'll reach out with the next steps.</p>
+    <form id="apply" action="https://formspree.io/f/xnjbkdov" method="POST">
+      <label>Full name</label>
+      <input name="name" required placeholder="Your name">
+      <label>Email</label>
+      <input name="email" type="email" required placeholder="you@example.com">
+      <label>Phone / WhatsApp</label>
+      <input name="phone" required placeholder="+91 …">
+      <label>Interested in</label>
+      <select name="course">
+        <option>Live Training, Enterprise Cyber Security</option>
+        <option>Pro Membership</option>
+        <option>Corporate Team Training</option>
+        <option>Project Rescue / Technical Review</option>
+      </select>
+      <label>Anything we should know? (optional)</label>
+      <textarea name="message" rows="3" placeholder="Your background, goals, timeline…"></textarea>
+      <button type="submit" class="btn primary">Submit application</button>
+    </form>
+    <div class="modal-ok" id="apply-ok">
+      <div style="font-size:40px;color:var(--G)">✓</div>
+      <h3>Application received</h3>
+      <p class="ms">Thanks, we'll review and reach out at the details you shared. Meanwhile, start free on the platform.</p>
+      <a href="https://app.zerodaylearn.com/signup" class="btn light">Start free now</a>
     </div>
+  </div>
 </div>
 
 <script>
-    // ─── HEADER SCROLL ───
-    window.addEventListener('scroll', () => {
-        const h = document.getElementById('main-header');
-        if (window.scrollY > 60) h.classList.add('scrolled');
-        else h.classList.remove('scrolled');
-
-        const btn = document.getElementById('scroll-top');
-        if (window.scrollY > 500) btn.classList.add('visible');
-        else btn.classList.remove('visible');
-    });
-
-    // ─── MOBILE MENU ───
-    function toggleMenu() {
-        document.getElementById('mobile-menu').classList.toggle('open');
-    }
-
-    // ─── MODAL ───
-    function openModal(course = '') {
-        const modal = document.getElementById('enrollment-modal');
-        modal.classList.add('open');
-        document.body.style.overflow = 'hidden';
-        document.getElementById('enrollment-success').style.display = 'none';
-        document.getElementById('enrollment-form').style.display = 'block';
-        if (course) {
-            const sel = document.querySelector('select[name="course"]');
-            if (sel) sel.value = course;
-        }
-    }
-
-    function closeModal() {
-        document.getElementById('enrollment-modal').classList.remove('open');
-        document.body.style.overflow = '';
-    }
-
-    document.getElementById('enrollment-modal').addEventListener('click', function(e) {
-        if (e.target === this) closeModal();
-    });
-
-    // AJAX form submit
-    document.getElementById('enrollment-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const data = new FormData(this);
-        try {
-            const res = await fetch(this.action, {
-                method: 'POST', body: data,
-                headers: { 'Accept': 'application/json' }
-            });
-            if (res.ok) {
-                this.style.display = 'none';
-                document.getElementById('enrollment-success').style.display = 'block';
-                this.reset();
-            } else { alert('Something went wrong. Please try again.'); }
-        } catch { alert('Network error. Please try again.'); }
-    });
-
-    // ─── FAQ ───
-    function toggleFAQ(btn) {
-        const item = btn.parentElement;
-        const isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-        if (!isOpen) item.classList.add('open');
-    }
-
-    // ─── NEWSLETTER ───
-    function handleNewsletter(e) {
-        e.preventDefault();
-        e.target.reset();
-        alert('Subscribed successfully! Stay tuned for insights.');
-    }
-
-    // ─── SCROLL REVEAL ───
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  var hdr=document.getElementById('hdr');
+  addEventListener('scroll',function(){hdr.classList.toggle('scrolled',scrollY>40);});
+  function toggleMenu(){document.getElementById('mmenu').classList.toggle('open');}
+  function openModal(course){
+    var m=document.getElementById('modal');m.classList.add('open');document.body.style.overflow='hidden';
+    document.getElementById('apply-ok').style.display='none';document.getElementById('apply').style.display='block';
+    if(course){var s=document.querySelector('select[name=course]');if(s){for(var i=0;i<s.options.length;i++){if(s.options[i].value===course)s.selectedIndex=i;}}}
+    var mm=document.getElementById('mmenu');if(mm)mm.classList.remove('open');
+  }
+  function closeModal(){document.getElementById('modal').classList.remove('open');document.body.style.overflow='';}
+  document.getElementById('modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+  function toggleFAQ(b){var it=b.parentElement,open=it.classList.contains('open');document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});if(!open)it.classList.add('open');}
+  document.getElementById('apply').addEventListener('submit',async function(e){
+    e.preventDefault();var d=new FormData(this);
+    try{var r=await fetch(this.action,{method:'POST',body:d,headers:{'Accept':'application/json'}});
+      if(r.ok){document.getElementById('apply').style.display='none';document.getElementById('apply-ok').style.display='block';this.reset();}
+      else alert('Something went wrong. Please email support@zerodaylearn.com.');
+    }catch(_){alert('Network error. Please email support@zerodaylearn.com.');}
+  });
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('vis');io.unobserve(en.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+  document.getElementById('yr').textContent=new Date().getFullYear();
 </script>
 </body>
 </html>
